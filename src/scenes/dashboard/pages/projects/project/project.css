@@ -1,0 +1,122 @@
+.project {
+  position: relative;
+  display: flex;
+  gap: 0.54rem;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid rgb(16, 16, 16) 1px;
+  border-radius: 2px;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+}
+
+.project__img {
+  margin: 1rem 0rem;
+  width: 180px;
+  height: 140px;
+}
+
+.project__btn {
+  font-weight: bold;
+  color: var(--crimson);
+  font-size: 1.5rem;
+  margin-left: 0.6rem;
+}
+
+.heart {
+  color: crimson;
+}
+.project__btns {
+  align-self: flex-end;
+  margin-top: 2rem;
+  margin-right: 1rem;
+}
+.project__btn:hover {
+  color: var(--golden);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.project__select {
+  position: absolute;
+  left: 6%;
+
+  top: 4%;
+}
+.project input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgb(39, 38, 38);
+
+  margin: 0;
+  margin-left: auto;
+
+  font: inherit;
+  color: currentColor;
+  font-size: 1rem;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.12em solid var(--golden);
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  cursor: pointer;
+
+  display: grid;
+  place-content: center;
+}
+
+.project input[type="checkbox"]::before {
+  content: "";
+  width: 0.55em;
+  height: 0.55em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em rgb(243, 196, 80);
+}
+
+.project input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.project__partnerships {
+  color: var(--crimson);
+  max-width: 200px;
+  background-color: aqua;
+}
+
+.project__name {
+  margin: 0.5rem 0 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .project {
+    position: unset;
+    display: grid;
+    padding: 0 1rem;
+    grid-template-columns: 50px repeat(4, 1fr) 160px;
+    grid-auto-rows: 100px;
+    place-items: center;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .project__img {
+    width: 100px;
+    height: 80px;
+  }
+
+  .project__btns {
+    align-self: unset;
+    margin: 0;
+  }
+
+  .project__select {
+    width: 40px;
+    position: static;
+  }
+  .project__discord {
+    text-overflow: ellipsis;
+  }
+}

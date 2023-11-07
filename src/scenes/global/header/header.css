@@ -1,0 +1,162 @@
+.header {
+  position: sticky;
+  background-color: var(--black);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1rem;
+  z-index: 2;
+  color: var(--black);
+}
+
+.header li a {
+  color: var(--crimson);
+}
+.header__btn {
+  display: block;
+  color: var(--crimson);
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+
+.header__desktop-nav {
+  display: none;
+}
+
+.header__img {
+  width: 50px;
+  height: 50px;
+}
+
+.header__menu {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--black);
+  z-index: 10;
+  gap: 4rem;
+  min-height: 100vh;
+}
+
+.header__logo-title {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "MedievalSharp", cursive;
+}
+
+.header__menu__btn {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  color: var(--crimson);
+  font-size: 1.5rem;
+  align-self: self-end;
+  border-radius: 5px;
+  padding: 0.2rem;
+}
+
+.header__menu__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+.header__menu__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+.header__menu__list > li > a {
+  font-size: 1.2rem;
+}
+
+.header__scroll-btn {
+  position: fixed;
+  bottom: 2%;
+
+  right: 3%;
+  color: var(--crimson);
+  font-size: 2rem;
+  z-index: 50;
+}
+
+.header__desktop-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.header__desktop__btn {
+  border: solid 1px var(--crimson);
+  padding: 0.5em 1em;
+}
+.header__desktop__btn:hover {
+  border-color: var(--golden);
+  transition: all 0.2s ease-in-out;
+  color: var(--golden);
+}
+
+.header__scroll-img {
+  position: fixed;
+  bottom: 2.5%;
+  right: 2%;
+  height: auto;
+  width: 22px;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 500px) {
+  .header__logo-title {
+    font-size: 1.4rem;
+  }
+
+  .header__btn {
+    font-size: 1.9rem;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .header__desktop-nav {
+    display: block;
+    display: flex;
+    align-items: center;
+
+    gap: 2rem;
+    justify-content: center;
+  }
+  .header__btn {
+    display: none;
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header {
+    padding: 1.9rem 1.5rem;
+  }
+
+  .header__logo-title {
+    font-size: 1.5rem;
+  }
+
+  .header__img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .header__desktop__btn {
+    font-size: 1rem;
+  }
+  .header__scroll-btn {
+    color: var(--crimson);
+    font-size: 2.4rem;
+  }
+}

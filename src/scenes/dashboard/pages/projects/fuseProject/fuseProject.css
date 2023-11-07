@@ -1,0 +1,23 @@
+.fuse-panel {
+  color: var(--crimson);
+}
+
+.fuse-panel__article {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+  align-items: center;
+
+  gap: 3rem;
+}
+
+.fuse-panel__title {
+  text-align: center;
+  font-size: 2.1rem;
+  margin-bottom: 3rem;
+}
+
+.fuse-panel__select {
+  color: grey;
+  width: 100%;
+}

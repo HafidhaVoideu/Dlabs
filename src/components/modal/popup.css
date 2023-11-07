@@ -1,0 +1,61 @@
+.popup {
+  padding: 1.5rem 0rem;
+}
+
+.popup__delete-btn,
+.popup__edit-btn,
+.popup__close-btn {
+  color: var(--crimson);
+  margin-right: 0.2rem;
+  padding: 0.3em;
+  font-size: 1.3rem;
+}
+.popup__delete-btn:hover,
+.popup__edit-btn:hover {
+  color: crimson;
+  transition: all 0.2s ease-in-out;
+}
+.popup__edit-btn:hover {
+  color: var(--golden);
+}
+
+.popup__close-btn {
+  margin-left: auto;
+}
+
+.popup__close-btn:hover {
+  color: crimson;
+}
+
+.popup__img {
+  width: 200px;
+  height: 200px;
+}
+
+.popup__select {
+  color: rgb(17, 17, 17);
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.popup__select:hover {
+  background-color: crimson;
+}
+
+.popup__roles {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--golden);
+}
+
+.popup__des-label {
+  margin-bottom: 1rem;
+  color: var(--golden);
+}
+.popup__des-div {
+  margin-top: 1rem;
+}
+
+.popup__error {
+  color: crimson;
+}

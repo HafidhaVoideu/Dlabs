@@ -1,0 +1,16 @@
+.alert {
+  background-color: rgb(129, 129, 129);
+  width: 300px;
+  text-align: center;
+  padding: 1rem 1rem;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  font-size: 1rem;
+  border-radius: 4px;
+  color: white;
+}

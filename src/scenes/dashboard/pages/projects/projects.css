@@ -1,0 +1,13 @@
+.projects {
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 290px));
+  justify-content: space-around;
+  gap: 1.8rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .projects {
+    display: block;
+  }
+}

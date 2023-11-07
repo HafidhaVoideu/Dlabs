@@ -1,0 +1,39 @@
+/* **************************** Validated Synergy ******************* */
+/* ******************************************************************* */
+
+.pyn__popup {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.pyn__popup__name {
+  text-transform: capitalize;
+  font-size: 1.7rem;
+  margin-bottom: 2rem;
+  color: var(--crimson);
+}
+.pyn__popup__price {
+  font-size: 1.4rem;
+  margin-top: 3rem;
+  color: var(--golden);
+}
+.pyn__popup__img {
+  width: 250px;
+}
+
+.pyn__popup__btn {
+  border: solid 1px var(--crimson);
+
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--crimson);
+
+  margin-right: 1rem;
+  padding: 0.5rem 1.4rem;
+}
+.pyn__popup__btn:hover {
+  transition: all 0.3s ease-in-out;
+
+  background-color: var(--golden);
+  color: var(--gray);
+}

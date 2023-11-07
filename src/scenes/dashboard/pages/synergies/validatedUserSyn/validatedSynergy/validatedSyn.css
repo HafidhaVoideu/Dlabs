@@ -1,0 +1,90 @@
+/* **************************** Validated Synergy ******************* */
+/* ******************************************************************* */
+
+.vsyn__popup {
+  text-align: center;
+
+  padding-bottom: 2rem;
+}
+
+.vsyn {
+  cursor: pointer;
+}
+
+.vsyn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: all ease-in-out 0.3s;
+}
+
+.vsyn__popup__name {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--crimson);
+}
+.vsyn__popup__price {
+  font-size: 2rem;
+  margin-top: 2rem;
+  color: var(--golden);
+}
+.vsyn__popup__img {
+  width: 220px;
+}
+
+.vsyn__popup__btn {
+  border: solid 2px rgb(52, 51, 51);
+
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--crimson);
+
+  margin-top: 2.2rem;
+  padding: 0.7rem 1rem;
+}
+.vsyn__popup__btn:hover {
+  transition: all 0.3s ease-in-out;
+
+  background-color: rgb(219, 217, 217);
+  color: var(--gray);
+}
+.margin--top {
+  margin-top: 1rem;
+}
+
+/* **************************** next page  ******************* */
+/* ******************************************************************* */
+
+.vsyn__page__name {
+  font-size: 1.3rem;
+  color: var(--crimson);
+  margin-bottom: 1rem;
+}
+.vsyn__page__name {
+  font-size: 1.3rem;
+  color: var(--crimson);
+  margin-bottom: 1rem;
+}
+
+.vsyn__page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.vsyn__page__form label {
+  color: var(--crimson);
+}
+.vsyn__page__btn {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: var(--golden);
+  padding: 0.5rem 1rem;
+  color: rgb(58, 57, 57);
+  margin: 0 auto;
+  margin-top: 2rem;
+  color: var(--crimson);
+  margin-bottom: 1rem;
+}

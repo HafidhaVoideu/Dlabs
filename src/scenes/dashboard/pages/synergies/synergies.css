@@ -1,0 +1,81 @@
+.synergies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 290px));
+  justify-content: space-around;
+  place-items: center;
+  min-height: 70vh;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+.synergy {
+  display: flex;
+
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+  gap: 1rem;
+}
+
+.active-syn {
+  cursor: pointer;
+}
+
+.synergy__price {
+  color: var(--golden);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+
+  font-weight: bold;
+  text-align: center;
+}
+.synergy__name {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  color: var(--crimson);
+}
+.synergy__img {
+  width: 100%;
+  max-height: 200px;
+}
+
+@media screen and (min-width: 1024px) {
+  .synergies {
+    place-content: start;
+  }
+}
+/* **************************** Filterd Synergies *********************** */
+/* ********************************************************************* */
+
+.filtersyn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--crimson);
+  /* margin: 0 auto; */
+  gap: 1rem;
+  font-weight: bold;
+  /* margin: 2rem 0 1rem; */
+
+  width: max-content;
+}
+.filtersyn__label {
+  margin-right: 0.5rem;
+}
+.filtersyn__input {
+  padding: 0.4rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.filtersyn__divider {
+  width: 25px;
+  align-self: center;
+  height: 4px;
+  background-color: var(--golden);
+}
+
+@media screen and (min-width: 500px) {
+  .filtersyn {
+    flex-direction: row;
+  }
+}

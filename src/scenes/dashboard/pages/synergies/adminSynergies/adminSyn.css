@@ -1,0 +1,26 @@
+.synergy-op {
+  color: var(--crimson);
+  margin-bottom: 2rem;
+}
+.synergy-op__form {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.synergy-op__title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.synergy-op button {
+  margin: 1rem auto 0rem;
+
+  max-width: max-content;
+}
+
+.synergy-op button:disabled {
+  border: 1px solid #999999;
+  background-color: green;
+}

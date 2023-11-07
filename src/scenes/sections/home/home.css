@@ -1,0 +1,84 @@
+.home {
+  display: grid;
+  place-items: center;
+  background-size: cover;
+  background: linear-gradient(to left, #010101ba, #000000fe),
+    url(../../../assets/bg2.jpg) no-repeat top center;
+  padding: 1rem 0rem;
+  min-height: 77vh;
+
+  overflow-x: hidden;
+}
+
+.home__div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.home__btn {
+  position: relative;
+
+  z-index: 1;
+  cursor: pointer;
+  padding: 1.07rem;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--crimson);
+}
+
+.home__img-div {
+  position: relative;
+  min-height: 72px;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.home__frame {
+  top: -18px;
+  left: 0;
+  position: absolute;
+  height: auto;
+  width: 400px;
+}
+
+.home__btn:hover {
+  transform: scale(1.02);
+  transition: all 0.1s ease-in-out;
+  border-color: var(--golden);
+  color: var(--golden);
+}
+.home__img {
+  display: block;
+  margin: 0 auto;
+  max-width: 550px;
+  width: 100%;
+}
+
+@media screen and (min-width: 375px) {
+  .home {
+    min-height: 90vh;
+  }
+}
+@media screen and (min-width: 700px) {
+  .home {
+    min-height: 100vh;
+  }
+  .home__frame {
+    top: -22px;
+  }
+  .home__btn {
+    font-size: 1.3rem;
+  }
+
+  .home__frame {
+    width: 700px;
+  }
+}
+
+@media screen and (min-width: 1550px) {
+  .home__frame {
+    width: 650px;
+  }
+}

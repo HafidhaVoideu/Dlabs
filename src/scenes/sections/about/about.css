@@ -1,0 +1,47 @@
+.about {
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.5;
+  padding: 1rem;
+  font-size: 0.8rem;
+  max-width: 750px;
+}
+
+.about__frame {
+  position: relative;
+}
+
+.about__img1,
+.about__img2 {
+  display: none;
+  position: absolute;
+  width: 120px;
+}
+.about__img1 {
+  left: -3vw;
+  top: -5vh;
+}
+.about__img2 {
+  position: absolute;
+
+  right: -3vw;
+  bottom: -5vh;
+}
+
+@media screen and (min-width: 700px) {
+  .about {
+    font-size: 1.08rem;
+  }
+
+  .about__img1,
+  .about__img2 {
+    display: block;
+    position: absolute;
+    width: 120px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .about {
+    font-size: 1.35rem;
+  }
+}

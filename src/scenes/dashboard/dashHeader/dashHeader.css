@@ -1,0 +1,66 @@
+/* ************************   Dashboard Header  ********************************* */
+/* ************************ ************************ ********************  */
+
+.dashboard-header {
+  display: flex;
+  margin-top: 6rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.deashboard-header__logo {
+  width: 160px;
+  order: -1;
+}
+
+.deashboard-search {
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+
+  gap: 0.5rem;
+  padding: 1rem 0.7rem;
+  width: 80%;
+
+  background-color: #3b3b3b;
+  border-radius: 5px;
+}
+.deashboard-search > input {
+  padding: 0.4rem;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+}
+.deashboard-search__btn {
+  color: var(--crimson);
+  font-size: 1.2rem;
+}
+
+/* @media screen and (min-width: 700px) {
+  .deashboard-header__logo {
+    width: 160px;
+  }
+} */
+
+@media screen and (min-width: 1024px) {
+  .dashboard-header {
+    margin-top: 2rem;
+
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .deashboard-header__logo {
+    width: 100px;
+    order: 3;
+  }
+
+  .deashboard-search__btn {
+    font-size: 1.3rem;
+  }
+  .deashboard-search {
+    width: 33%;
+  }
+}
