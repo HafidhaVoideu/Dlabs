@@ -9,6 +9,7 @@ import "./home.css";
 import { Auth } from "@supabase/auth-ui-react";
 
 import { createClient } from "@supabase/supabase-js";
+import { useGlobalContextUser } from "../../../context/context";
 
 const supabase = createClient(
   "https://alkldwabyaufocdpdpns.supabase.co",
@@ -19,16 +20,21 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [signedIn, setIsSignedIn] = useState(false);
-  const [session, setSession] = useState(null);
+
+  const { session, setSession } = useGlobalContextUser();
 
   async function signInWithDiscord() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "discord",
+      options: {
+        scopes: "identify guilds connections guilds.members.read ",
+      },
     });
   }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("home sessions data:", session);
       setSession(session);
     });
 

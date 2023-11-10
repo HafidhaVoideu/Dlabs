@@ -3,13 +3,14 @@ import { v4 as uuidV4 } from "uuid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import Select from "react-select";
+
 import { useGlobalContextUser } from "../../../../../context/context";
 
 const AddSynergy = ({ setIsModal }) => {
   // ****************** validation schema *****************************
 
   const { synergies, setSynergies } = useGlobalContextUser();
-
   const validateSchema = Yup.object({
     name: Yup.string().required("required"),
     price: Yup.number()
@@ -19,7 +20,7 @@ const AddSynergy = ({ setIsModal }) => {
   });
 
   const initialValues = {
-    name: "",
+    pname: "",
     price: "",
     image: "",
   };
@@ -29,7 +30,7 @@ const AddSynergy = ({ setIsModal }) => {
     setSynergies([
       {
         id: uuidV4(),
-        project_name: name,
+        project_name: pname,
         price,
         image,
       },
@@ -58,8 +59,9 @@ const AddSynergy = ({ setIsModal }) => {
                 <label htmlFor="name" className="form__label">
                   name
                 </label>
-                <Field type="text" className="form__input" name="name" />
-                <ErrorMessage name="name">
+
+                <Field as="select" className="form__input" name="pname" />
+                <ErrorMessage name="pname">
                   {(errMessage) => <p className="form__error">*{errMessage}</p>}
                 </ErrorMessage>
               </div>

@@ -6,6 +6,8 @@ import { pendingSynergies as defaultPendingSynergies } from "../data/pendingSyne
 import axios from "../axios/axios";
 import { createClient } from "@supabase/supabase-js";
 
+import myAxios from "axios";
+
 const supabase = createClient(
   "https://alkldwabyaufocdpdpns.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsa2xkd2FieWF1Zm9jZHBkcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkyNDIyMzAsImV4cCI6MjAxNDgxODIzMH0.HftPTZvFZi-nvwugLuQX7QLT1wbVRyIbTiwGC0ydwqI"
@@ -14,9 +16,9 @@ const supabase = createClient(
 export const UserContext = React.createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(defaultUser);
+  const [user, setUser] = useState();
   const [projects, setProjects] = useState([]);
-  const [synergies, setSynergies] = useState([]);
+  const [synergies, setSynergies] = useState(defaultSynergies);
   const [pendingSynergies, setPendingSynergies] = useState(
     defaultPendingSynergies
   );
@@ -26,6 +28,7 @@ const UserContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState("Featured Projects");
 
+  const [session, setSession] = useState();
   useEffect(() => {
     setSearch("");
   }, [tab]);
@@ -67,10 +70,25 @@ const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (session) {
+      console.log("provider Token:", session.provider_token);
+
+      myAxios
+        .get("https://discord.com/api/v10/users/@me/guilds", {
+          headers: {
+            Authorization: `Bearer ${session.provider_token}`,
+          },
+        })
+        .then((response) => console.log("guilds:", response.data))
+        .catch((error) => console.log("error", error));
+    }
+  }, [session]);
+
+  useEffect(() => {
     async function getUserData() {
       await supabase.auth.getUser().then((value) => {
         if (value.data?.user) {
-          console.log(value.data.user);
+          // console.log(value.data.user);
 
           setUser({
             id: value.data.user?.user_metadata?.provider_id,
@@ -183,6 +201,8 @@ const UserContextProvider = ({ children }) => {
         setFeaturedProjects,
         pendingSynergies,
         setPendingSynergies,
+        session,
+        setSession,
       }}
     >
       {children}

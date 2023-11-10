@@ -59,35 +59,36 @@ const Synergies = () => {
           setFilteredSyn={setFilteredSyn}
           synergies={synergies}
         />
-        {user.role === "admin" && (
-          <div className="dashboard__btns">
-            <button
-              className="dashboard__add-btn"
-              onClick={() => {
-                setOperation("add");
-                setIsModal("true");
-              }}
-            >
-              <AiOutlineFileAdd />
-            </button>
-            <button className="dashboard__edit-btn">
-              <FiEdit
+        {user.role === "admin" ||
+          (user.role === "authenticated" && (
+            <div className="dashboard__btns">
+              <button
+                className="dashboard__add-btn"
                 onClick={() => {
-                  setIsModal("true");
-                  setOperation("edit");
-                }}
-              />
-            </button>
-            <button className="dashboard__dlt-btn">
-              <AiOutlineDelete
-                onClick={() => {
-                  setOperation("dlt");
+                  setOperation("add");
                   setIsModal("true");
                 }}
-              />
-            </button>
-          </div>
-        )}
+              >
+                <AiOutlineFileAdd />
+              </button>
+              <button className="dashboard__edit-btn">
+                <FiEdit
+                  onClick={() => {
+                    setIsModal("true");
+                    setOperation("edit");
+                  }}
+                />
+              </button>
+              <button className="dashboard__dlt-btn">
+                <AiOutlineDelete
+                  onClick={() => {
+                    setOperation("dlt");
+                    setIsModal("true");
+                  }}
+                />
+              </button>
+            </div>
+          ))}
       </div>
 
       {isModal && (
