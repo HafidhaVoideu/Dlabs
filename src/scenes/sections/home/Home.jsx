@@ -73,7 +73,6 @@ const Home = () => {
             Connect To Discord
           </a>
         </div>
-
         <motion.div
           variants={staggerContainer()}
           initial="hidden"
