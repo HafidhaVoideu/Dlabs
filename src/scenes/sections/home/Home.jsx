@@ -27,8 +27,7 @@ const Home = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "discord",
       options: {
-        scopes:
-          "identify guilds connections guilds.members.read dm_channels.read guilds.join messages.read  relationships.read role_connections.write rpc rpc.activities.write rpc.notifications.read rpc.voice.read rpc.voice.write voice webhook.incoming activities.read activities.write applications.builds.read applications.builds.upload applications.commands applications.commands.update applications.commands.permissions.update applications.entitlements applications.store.update bot ",
+        scopes: "identify guilds connections guilds.members.read ",
       },
     });
   }

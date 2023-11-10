@@ -185,7 +185,7 @@ const UserContextProvider = ({ children }) => {
 
       myAxios
         .get(
-          `https://discord.com/api/v10/users/@me/guilds/994081626474680361/member`,
+          `https://discord.com/api/v10/@me/guilds/994081626474680361/member`,
           {
             headers: {
               Authorization: `Bearer ${session.provider_token}`,
