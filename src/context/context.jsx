@@ -74,11 +74,14 @@ const UserContextProvider = ({ children }) => {
       console.log("provider Token:", session.provider_token);
 
       myAxios
-        .get("https://discord.com/api/v10/users/@me/guilds", {
-          headers: {
-            Authorization: `Bearer ${session.provider_token}`,
-          },
-        })
+        .get(
+          `https://discord.com/api/v10/guilds/{guild.id}/members/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.provider_token}`,
+            },
+          }
+        )
         .then((response) => console.log("guilds:", response.data))
         .catch((error) => console.log("error", error));
     }
@@ -173,6 +176,25 @@ const UserContextProvider = ({ children }) => {
 
     getUserData();
   }, []);
+
+  useEffect(() => {
+    if (session && user) {
+      console.log("provider Token:", session.provider_token);
+      console.log("clg userid:", user.id);
+
+      myAxios
+        .get(
+          `https://discord.com/api/v10/guilds/994081626474680361/members/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.provider_token}`,
+            },
+          }
+        )
+        .then((response) => console.log("guilds:", response.data))
+        .catch((error) => console.log("error", error));
+    }
+  }, [session]);
 
   useEffect(() => {
     // getFeaturedProjects();
