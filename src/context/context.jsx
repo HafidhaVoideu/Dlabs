@@ -180,7 +180,8 @@ const UserContextProvider = ({ children }) => {
   useEffect(() => {
     if (session && user) {
       console.log("provider Token:", session.provider_token);
-      console.log("clg userid:", user.id);
+      console.log("userid:", user.id);
+      console.log("guild id: 994081626474680361");
 
       myAxios
         .get(
