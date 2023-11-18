@@ -1,41 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuidV4 } from "uuid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
 import Select from "react-select";
-
 import { useGlobalContextUser } from "../../../../../context/context";
-
+import axios from "../../../../../axios/axios";
 const AddSynergy = ({ setIsModal }) => {
   // ****************** validation schema *****************************
 
-  const { synergies, setSynergies } = useGlobalContextUser();
+  const { synergies, setSynergies, projects } = useGlobalContextUser();
+  const mappedOptions = projects
+    .filter((p) => !synergies?.map((s) => s._project_id).includes(p.project_id))
+    .map((p) => {
+      return { value: p.project_id, label: p.project_name };
+    });
+  // const isValidUrl = (url) => {
+  //   try {
+  //     new URL(url);
+  //   } catch (e) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+  const [select, setSelect] = useState(mappedOptions[0]);
   const validateSchema = Yup.object({
-    name: Yup.string().required("required"),
     price: Yup.number()
       .typeError("price must be a number")
       .required("required"),
-    image: Yup.string().required("required"),
   });
 
   const initialValues = {
-    pname: "",
     price: "",
-    image: "",
   };
 
   const onSubmit = (values, onSubmit) => {
-    const { name, price, image } = values;
+    const { price } = values;
     setSynergies([
       {
         id: uuidV4(),
-        project_name: pname,
-        price,
-        image,
+        _project_id: select.value,
+        price: Number(price),
       },
       ...synergies,
     ]);
+
+    axios
+      .post(`/api/synergies/`, {
+        price: price,
+        projectId: select.value,
+      })
+      .then((response) => console.log(response));
+
     setIsModal(false);
     onSubmit.setSubmitting(false);
     onSubmit.resetForm();
@@ -54,28 +70,21 @@ const AddSynergy = ({ setIsModal }) => {
           return (
             <Form className="form">
               {/* name */}
-
               <div className="form__div">
                 <label htmlFor="name" className="form__label">
-                  name
+                  project
                 </label>
 
-                <Field as="select" className="form__input" name="pname" />
-                <ErrorMessage name="pname">
-                  {(errMessage) => <p className="form__error">*{errMessage}</p>}
-                </ErrorMessage>
-              </div>
-
-              {/* image */}
-
-              <div className="form__div">
-                <label htmlFor="image" className="form__label">
-                  image
-                </label>
-                <Field type="text" className="form__input" name="image" />
-                <ErrorMessage name="image">
-                  {(errMessage) => <p className="form__error">*{errMessage}</p>}
-                </ErrorMessage>
+                <Select
+                  id="name"
+                  className="select"
+                  value={select}
+                  onChange={(select) => setSelect(select)}
+                  isClearable={false}
+                  isSearchable={true}
+                  options={mappedOptions}
+                  classNamePrefix="react-select"
+                />
               </div>
 
               {/* price*/}

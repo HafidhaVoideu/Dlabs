@@ -123,7 +123,7 @@
     position: sticky;
     inset: 0;
     overflow-y: scroll;
-    justify-content: space-around;
+    justify-content: start;
 
     padding-top: 4rem;
   }
@@ -135,5 +135,22 @@
 @media screen and (min-width: 1120px) {
   .dashboard-aside {
     overflow-y: auto;
+  }
+
+  .dashboard-aside__list a {
+    font-size: 1.1rem;
+  }
+
+  .dashboard-aside__user {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .dashboard-aside__wallet {
+    font-size: 1rem;
+  }
+
+  .dashboard-aside__info {
+    gap: 4rem;
   }
 }

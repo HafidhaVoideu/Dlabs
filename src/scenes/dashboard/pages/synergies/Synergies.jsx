@@ -7,10 +7,8 @@ import {
 } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { motion } from "framer-motion";
-
 import "./synergies.css";
 import "./adminSynergies/adminSyn.css";
-
 import { useGlobalContextUser } from "../../../../context/context";
 import EditSyngergy from "./adminSynergies/EditSyngergy";
 import AddSynergy from "./adminSynergies/AddSynergy";
@@ -19,11 +17,17 @@ import Pagination from "../../../../components/pagination/Pagination";
 import { maxItems } from "../../../../constants/const";
 import FilteredSynergies from "./FilteredSynergies";
 const Synergies = () => {
+  // ************************ State *********************************
   const { search, tab, synergies, user, projects } = useGlobalContextUser();
   const [operation, setOperation] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [filteredSyn, setFilteredSyn] = useState([]);
+  const [searchedPorjects, setSearchedProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+
+  // ************************ Code***********************************
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * maxItems;
@@ -36,16 +40,25 @@ const Synergies = () => {
     body.style.overflow = isModal ? "hidden" : "auto";
   }, [isModal]);
 
-  const projectNames = projects.map((p) => {
-    if (synergies.map((s) => s.project_id).includes(p.project_id))
-      return p.project_name;
-  });
-
-  const searchProjectNames = projectNames.filter((name) =>
-    name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  console.log("synergies:", searchProjectNames);
+  useEffect(() => {
+    if (search) {
+      setSearchedProjects([]);
+      const projectNames = projects.map((p) => {
+        if (synergies?.map((s) => s._project_id).includes(p.project_id))
+          return p.project_name;
+      });
+      const searchProjectNames = projectNames.filter((name) =>
+        name?.toLowerCase().includes(search?.toLowerCase())
+      );
+      const mappedProjects = projects.filter((p) =>
+        searchProjectNames.includes(p.project_name)
+      );
+      const mappedSynergies = synergies.filter((s) =>
+        mappedProjects.map((p) => p.project_id).includes(s._project_id)
+      );
+      if (mappedSynergies.length) setSearchedProjects(mappedSynergies);
+    }
+  }, [search]);
 
   return (
     <motion.section
@@ -58,37 +71,41 @@ const Synergies = () => {
         <FilteredSynergies
           setFilteredSyn={setFilteredSyn}
           synergies={synergies}
+          searchedPorjects={searchedPorjects}
+          min={min}
+          max={max}
+          setMin={setMin}
+          setMax={setMax}
         />
-        {user.role === "admin" ||
-          (user.role === "authenticated" && (
-            <div className="dashboard__btns">
-              <button
-                className="dashboard__add-btn"
+        {user.role === "admin" && (
+          <div className="dashboard__btns">
+            <button
+              className="dashboard__add-btn"
+              onClick={() => {
+                setOperation("add");
+                setIsModal("true");
+              }}
+            >
+              <AiOutlineFileAdd />
+            </button>
+            <button className="dashboard__edit-btn">
+              <FiEdit
                 onClick={() => {
-                  setOperation("add");
+                  setIsModal("true");
+                  setOperation("edit");
+                }}
+              />
+            </button>
+            <button className="dashboard__dlt-btn">
+              <AiOutlineDelete
+                onClick={() => {
+                  setOperation("dlt");
                   setIsModal("true");
                 }}
-              >
-                <AiOutlineFileAdd />
-              </button>
-              <button className="dashboard__edit-btn">
-                <FiEdit
-                  onClick={() => {
-                    setIsModal("true");
-                    setOperation("edit");
-                  }}
-                />
-              </button>
-              <button className="dashboard__dlt-btn">
-                <AiOutlineDelete
-                  onClick={() => {
-                    setOperation("dlt");
-                    setIsModal("true");
-                  }}
-                />
-              </button>
-            </div>
-          ))}
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       {isModal && (
@@ -113,21 +130,19 @@ const Synergies = () => {
       {/* *********************** admin ****************** */}
       <section className="synergies">
         {filteredSyn.length !== 0 &&
-          !search &&
           filteredSyn?.map((syn) => <Synergy key={syn.id} syn={syn} />)}
-
-        {tab === "Synergies" &&
-          search &&
-          searchProjectNames?.map((syn) => <Synergy key={syn.id} syn={syn} />)}
-        {tab === "Synergies" &&
-          !search &&
+        {search &&
+          searchedPorjects?.map((syn) => <Synergy key={syn.id} syn={syn} />)}
+        {!search &&
           !filteredSyn.length &&
+          !min &&
+          !max &&
           currentTableData?.map((syn) => <Synergy key={syn.id} syn={syn} />)}
       </section>
 
       <Pagination
         currentPage={currentPage}
-        totalCount={search && tab === "Projects" ? 0 : synergies.length}
+        totalCount={search && tab === "Projects" ? 0 : synergies?.length}
         pageSize={maxItems}
         onPageChange={(page) => setCurrentPage(page)}
       />

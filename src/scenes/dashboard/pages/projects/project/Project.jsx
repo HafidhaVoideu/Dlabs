@@ -18,9 +18,9 @@ const Project = ({
   const [isEditModal, setIsEditModal] = useState(false);
   const [isMoreModal, setIsMoreModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const { projects, setProjects } = useGlobalContextUser();
+  const { projects, setProjects, setFeaturedProjects } = useGlobalContextUser();
 
-  const { project_id, project_name, discord_link, img, website, featured } =
+  const { project_id, project_name, discord_link, image, website, featured } =
     project;
 
   useEffect(() => {
@@ -48,12 +48,13 @@ const Project = ({
 
   const addToFeatures = () => {
     const temp = projects.map((project) => {
-      if (project_id === project.project_id)
-        return { ...project, featured: true };
+      if (project_id === project.project_id) return { ...project, featured: 1 };
       else return project;
     });
 
     setProjects([...temp]);
+
+    setFeaturedProjects(temp.filter((p) => p.featured === 1));
   };
 
   const removeFromFeatures = () => {
@@ -100,7 +101,14 @@ const Project = ({
         />
       </div>
 
-      <img src={img} alt={project_name} className="project__img" />
+      <img
+        src={
+          image ||
+          "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        }
+        alt={project_name}
+        className="project__img"
+      />
 
       <p className="project__name">{project_name}</p>
       <p className="project__discord">{discord_link}</p>

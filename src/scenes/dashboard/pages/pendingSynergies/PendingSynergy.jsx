@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from "react";
 import PopupPendingSynergy from "./PopupPendingSynergy";
+import { useGlobalContextUser } from "../../../../context/context";
 
 const PendingSynergy = ({ pensyn }) => {
-  const { img, name, price } = pensyn;
+  const { _project_id, _synergy_id, partnerships } = pensyn;
   const [isModal, setIsModal] = useState(false);
+
+  const { synergies, projects } = useGlobalContextUser();
+
+  const [synProject, setSynProject] = useState({
+    image:
+      projects?.find((p) => p.project_id === _project_id)?.image ||
+      "https://images.pexels.com/photos/6777560/pexels-photo-6777560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    project_name: projects?.find((p) => p.project_id === _project_id)
+      .project_name,
+    price: synergies?.find((s) => s.id === _synergy_id).price,
+    partnerships,
+    _synergy_id,
+  });
+
   const openModal = () => {
     setIsModal(true);
   };
   const closeModal = () => {
-    console.log("close");
     setIsModal(false);
   };
 
@@ -20,14 +34,18 @@ const PendingSynergy = ({ pensyn }) => {
   return (
     <>
       {isModal && (
-        <PopupPendingSynergy closeModal={closeModal} pendingSyn={pensyn} />
+        <PopupPendingSynergy closeModal={closeModal} pendingSyn={synProject} />
       )}
       <article className="synergy active-syn " onClick={openModal}>
-        <img src={img} alt={name} className="synergy__img" />
+        <img
+          src={synProject.image}
+          alt={synProject.project_name}
+          className="synergy__img"
+        />
 
         <div className="synergy__info">
-          <h1 className="synergy__name">{name}</h1>
-          <p className="synergy__price">{price} Idkn</p>
+          <h1 className="synergy__name">{synProject.project_name}</h1>
+          <p className="synergy__price">{synProject.price} Idkn</p>
         </div>
       </article>
     </>

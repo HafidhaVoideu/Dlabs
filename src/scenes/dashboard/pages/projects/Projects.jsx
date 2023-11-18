@@ -44,7 +44,8 @@ const Projects = () => {
   const handleDelete = () => {
     if (selectedProjects.length) {
       const temp = projects.filter(
-        (p) => !selectedProjects.map((sp) => sp.id).includes(p.id)
+        (p) =>
+          !selectedProjects.map((sp) => sp.project_id).includes(p.project_id)
       );
 
       setProjects([...temp]);
@@ -113,13 +114,12 @@ const Projects = () => {
         </button>
       </div>
       <section className="projects">
-        {tab === "Projects" &&
-          search &&
+        {search &&
           projects
             ?.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
-            .map((p) => (
+            .map((p, index) => (
               <Project
-                key={p.project_id}
+                key={index}
                 project={p}
                 setSelectedProjects={setSelectedProjects}
                 selectedProjects={selectedProjects}
@@ -127,11 +127,10 @@ const Projects = () => {
               />
             ))}
 
-        {tab === "Projects" &&
-          !search &&
-          currentTableData.map((p) => (
+        {!search &&
+          currentTableData.map((p, index) => (
             <Project
-              key={p.id}
+              key={index}
               project={p}
               setSelectedProjects={setSelectedProjects}
               selectedProjects={selectedProjects}

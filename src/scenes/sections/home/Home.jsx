@@ -67,7 +67,6 @@ const Home = () => {
 
         <div className="home__img-div">
           <img src={frame} className="home__frame" alt="button-frame" />
-
           <a className="home__btn" onClick={signInWithDiscord}>
             Connect To Discord
           </a>

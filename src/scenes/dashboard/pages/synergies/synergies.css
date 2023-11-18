@@ -5,15 +5,16 @@
   place-items: center;
   min-height: 70vh;
   gap: 3rem;
+
   margin-top: 3rem;
 }
 .synergy {
   display: flex;
-
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
   padding-bottom: 1rem;
+  min-height: 320px;
   gap: 1rem;
 }
 
@@ -32,11 +33,12 @@
 .synergy__name {
   font-size: 1.2rem;
   text-transform: capitalize;
+  text-align: center;
   color: var(--crimson);
 }
 .synergy__img {
   width: 100%;
-  max-height: 200px;
+  height: 200px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -52,10 +54,8 @@
   flex-direction: column;
   align-items: center;
   color: var(--crimson);
-  /* margin: 0 auto; */
   gap: 1rem;
   font-weight: bold;
-  /* margin: 2rem 0 1rem; */
 
   width: max-content;
 }
@@ -77,5 +77,6 @@
 @media screen and (min-width: 500px) {
   .filtersyn {
     flex-direction: row;
+    margin-left: auto;
   }
 }

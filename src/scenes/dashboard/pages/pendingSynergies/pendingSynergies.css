@@ -20,6 +20,11 @@
 .pyn__popup__img {
   width: 250px;
 }
+.pyn__popup__partnerships {
+  margin-top: 1.7rem;
+  font-weight: 500;
+  color: var(--golden);
+}
 
 .pyn__popup__btn {
   border: solid 1px var(--crimson);

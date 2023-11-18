@@ -75,12 +75,10 @@ const Sidebar = () => {
 
               <div className="dashboard-aside__wallet">
                 <p>
-                  Drkn Wallet:
-                  <span> 3000 drkn </span>
+                  Drkn Wallet: <span> {user?.drkn_wallet} drkn </span>
                 </p>
                 <p>
-                  Idrkn Wallet:
-                  <span> 5000 Idrkn </span>
+                  Idrkn Wallet: <span>{user?.idrkn_wallet} Idrkn </span>
                 </p>
               </div>
             </div>
@@ -99,9 +97,9 @@ const Sidebar = () => {
               variants={sideVariants}
             >
               {links.map(({ name, to, id }) => {
-                if (user.role === "admin" && name === "My Projects") return;
+                if (user?.role === "admin" && name === "My Projects") return;
                 if (
-                  (user.role === "user" || user.role === "validUser") &&
+                  (user?.role === "user" || user?.role === "validUser") &&
                   name === "Pending Synergies"
                 )
                   return;

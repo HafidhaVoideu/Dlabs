@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from "react";
-
-const FilteredSynergies = ({ setFilteredSyn, synergies }) => {
-  const [min, setMin] = useState();
-  const [max, setMax] = useState();
-
+import React, { useEffect } from "react";
+const FilteredSynergies = ({
+  setFilteredSyn,
+  synergies,
+  min,
+  max,
+  setMin,
+  setMax,
+  searchedProjects,
+}) => {
   useEffect(() => {
-    if (max && min) {
+    let filteredSynergies;
+    let synergiesTemp;
 
-      const filtered = synergies.filter(
+    if (searchedProjects?.length) synergiesTemp = searchedProjects;
+    else synergiesTemp = synergies;
+
+    if (max) {
+      filteredSynergies = synergiesTemp.filter((s) => s.price <= max);
+      setFilteredSyn(filteredSynergies);
+    } else if (min) {
+      filteredSynergies = synergiesTemp.filter((s) => s.price >= min);
+      setFilteredSyn(filteredSynergies);
+    } else if (max && min) {
+      filteredSynergies = synergiesTemp.filter(
         (s) => s.price >= min && s.price <= max
       );
-      setFilteredSyn(filtered);
+      setFilteredSyn(filteredSynergies);
     } else setFilteredSyn([]);
   }, [min, max]);
 
@@ -33,11 +48,9 @@ const FilteredSynergies = ({ setFilteredSyn, synergies }) => {
       </div>
 
       <div className="filtersyn__divider"></div>
-
       <div>
         <label htmlFor="max" className="filtersyn__label">
-          {" "}
-          Max{" "}
+          Max
         </label>
         <input
           id="max"

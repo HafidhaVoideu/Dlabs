@@ -13,7 +13,7 @@ const FuseProject = ({ closeModal }) => {
   const [masterOptions, setMasterOptions] = useState();
 
   const options = projects.map((p) => {
-    return { value: p.id, label: p.name };
+    return { value: p.project_id, label: p.project_name };
   });
   useEffect(() => {
     // the whole obkject is being selected
@@ -34,7 +34,7 @@ const FuseProject = ({ closeModal }) => {
 
   const handleFusion = () => {
     const temp = projects.filter(
-      (p) => !multipleSelect.map((sp) => sp.value).includes(p.id)
+      (p) => !multipleSelect.map((sp) => sp.value).includes(p.project_id)
     );
 
     console.log("temp:", temp);

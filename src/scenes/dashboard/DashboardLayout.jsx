@@ -5,9 +5,7 @@ import TabTitle from "./title/TabTitle";
 import Sidebar from "./sidebar/Sidebar";
 import Alert from "../../components/alert/Alert";
 import { useNavigate } from "react-router-dom";
-
 import { createClient } from "@supabase/supabase-js";
-
 import "./dashboard.css";
 import { useGlobalContextUser } from "../../context/context";
 
@@ -17,7 +15,7 @@ const supabase = createClient(
 );
 
 const DashboardLayout = () => {
-  const { user } = useGlobalContextUser();
+  const { session } = useGlobalContextUser();
   const navigate = useNavigate();
 
   async function signOut() {
@@ -31,7 +29,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      {user && (
+      {session && (
         <main className="dashboard">
           <Alert />
           <Sidebar />

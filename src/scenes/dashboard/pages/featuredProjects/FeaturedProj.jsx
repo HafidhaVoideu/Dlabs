@@ -9,15 +9,8 @@ import Pagination from "../../../../components/pagination/Pagination";
 const FeaturedProj = () => {
   const { projects, tab, search, featuredProjects, setFeaturedProjects } =
     useGlobalContextUser();
-  // const [featuredProjects, setFeaturedProjects] = useState(
-  //   projects.filter((p) => p.featured)
-  // );
-  const [currentPage, setCurrentPage] = useState(1);
 
-  // useEffect(() => {
-  //   const temp = projects.filter((p) => p.featured);
-  //   setFeaturedProjects(temp);
-  // }, [projects]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * maxItems;
@@ -34,8 +27,7 @@ const FeaturedProj = () => {
         transition={{ duration: 0.6, ease: "easeIn" }}
       >
         <section className="profile__projects">
-          {tab === "Featured Projects" &&
-            search &&
+          {search &&
             featuredProjects
               .filter((p) =>
                 p.name.toLowerCase().includes(search.toLowerCase())
@@ -44,8 +36,7 @@ const FeaturedProj = () => {
                 <Fproject key={project.project_id} project={project} />
               ))}
 
-          {tab === "Featured Projects" &&
-            !search &&
+          {!search &&
             currentTableData?.map((project) => (
               <Fproject key={project.project_id} project={project} />
             ))}
@@ -53,9 +44,7 @@ const FeaturedProj = () => {
 
         <Pagination
           currentPage={currentPage}
-          totalCount={
-            search && tab === "Featured Projects" ? 0 : featuredProjects?.length
-          }
+          totalCount={search ? 0 : featuredProjects?.length}
           pageSize={maxItems}
           onPageChange={(page) => setCurrentPage(page)}
         />
