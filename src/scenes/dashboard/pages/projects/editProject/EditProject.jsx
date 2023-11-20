@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./edit.css";
 import { AiOutlineClose, AiOutlineFileAdd } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
@@ -6,18 +6,19 @@ import { v4 as uuidV4 } from "uuid";
 import { useGlobalContextUser } from "../../../../../context/context";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Select from "react-select";
+
+import axios from "../../../../../axios/axios";
 
 // todo ****************************************************************
 
 const EditProject = ({ project, closeModal }) => {
   const { projects, setProjects, setAlert } = useGlobalContextUser();
-  const [select, setSelect] = useState({
-    value: project?.rating || 1,
-    label: project?.rating || 1,
-  });
 
   const options = [
+    {
+      value: 0,
+      label: 0,
+    },
     {
       value: 1,
       label: 1,
@@ -62,30 +63,35 @@ const EditProject = ({ project, closeModal }) => {
 
   // ****************** validation schema *****************************
 
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+
   const validateSchema = Yup.object({
     project_name: Yup.string().required("required"),
     description: Yup.string().required("required"),
-    image: Yup.string().required("required"),
-    discord_link: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
+    image: Yup.string()
+      .test("is-url-valid", "Image URL is not valid", (value) =>
+        isValidUrl(value)
       )
-      .required("Please enter your discord"),
-
-    twitter: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      )
-      .required("Please enter your twitter"),
-
+      .required("required"),
+    discord_link: Yup.string().required("Please enter your discord"),
+    rating: Yup.number().required("Please enter a valid rating"),
+    twitter: Yup.string().required("Please enter your twitter"),
     website: Yup.string().required("Please enter your website"),
   });
 
   const initialValues = {
     project_name: project?.project_name || "",
     description: project?.description || "",
+
+    rating: project?.rating || 0,
+
     image:
       project?.img ||
       "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -97,14 +103,24 @@ const EditProject = ({ project, closeModal }) => {
   // ****************** Edit *****************************
 
   const handleEdit = (values) => {
-    const { project_name, description, discord_link, image, website, twitter } =
-      values;
+    const {
+      project_name,
+      description,
+      discord_link,
+      image,
+      website,
+      twitter,
+      rating,
+    } = values;
+
+    console.log("modified rating:", rating);
 
     const proj = projects.map((p) => {
       if (p.project_id === project.project_id)
         return {
           project_id: project.project_id,
           project_name,
+          rating: Number(rating),
           description,
           discord_link,
           image,
@@ -117,6 +133,7 @@ const EditProject = ({ project, closeModal }) => {
     setProjects([...proj]);
 
     setAlert({ isAlert: true, alertMessage: "Project has been edited" });
+
     closeModal();
   };
 
@@ -125,8 +142,15 @@ const EditProject = ({ project, closeModal }) => {
   const handleAdd = (values) => {
     //send axios to database
 
-    const { project_name, description, discord_link, image, website, twitter } =
-      values;
+    const {
+      project_name,
+      description,
+      discord_link,
+      image,
+      website,
+      twitter,
+      rating,
+    } = values;
 
     setProjects([
       {
@@ -135,6 +159,7 @@ const EditProject = ({ project, closeModal }) => {
         description,
         discord_link,
         image,
+        rating: Number(rating),
         website,
         twitter,
       },
@@ -142,6 +167,19 @@ const EditProject = ({ project, closeModal }) => {
     ]);
 
     setAlert({ isAlert: true, alertMessage: "Project has been Added" });
+
+    axios
+      .post(`/api/projects/`, {
+        project_name: project_name,
+        website: website,
+        description: description,
+        twitter: twitter,
+        discord_link: discord_link,
+        rating: rating,
+        image: image,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log("error:", error.message));
     closeModal();
   };
 
@@ -193,6 +231,7 @@ const EditProject = ({ project, closeModal }) => {
                   </label>
                   <Field
                     type="text"
+                    id="name"
                     className="form__input"
                     name="project_name"
                   />
@@ -209,7 +248,12 @@ const EditProject = ({ project, closeModal }) => {
                   <label htmlFor="image" className="form__label">
                     image
                   </label>
-                  <Field type="text" className="form__input" name="image" />
+                  <Field
+                    id="image"
+                    type="text"
+                    className="form__input"
+                    name="image"
+                  />
                   <ErrorMessage name="image">
                     {(errMessage) => (
                       <p className="form__error">*{errMessage}</p>
@@ -223,6 +267,7 @@ const EditProject = ({ project, closeModal }) => {
                     description
                   </label>
                   <Field
+                    id="des"
                     as="textarea"
                     rows={5}
                     type="text"
@@ -235,21 +280,30 @@ const EditProject = ({ project, closeModal }) => {
                     )}
                   </ErrorMessage>
                 </div>
+                {/* Rating */}
 
                 <div className="form__div">
                   <label htmlFor="rating" className="form__label">
                     rating
                   </label>
-                  <Select
+                  <Field
+                    as="select"
                     id="rating"
-                    className="select"
-                    value={select}
-                    onChange={(select) => setSelect(select)}
-                    isClearable={false}
-                    options={options}
-                    classNamePrefix="react-select"
+                    className="form__select"
                     name="rating"
-                  />
+                  >
+                    {options.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </Field>
+
+                  <ErrorMessage name="rating">
+                    {(errMessage) => (
+                      <p className="form__error">*{errMessage}</p>
+                    )}
+                  </ErrorMessage>
                 </div>
 
                 {/* Discord*/}

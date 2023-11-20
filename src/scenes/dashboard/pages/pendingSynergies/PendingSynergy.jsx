@@ -14,7 +14,7 @@ const PendingSynergy = ({ pensyn }) => {
       "https://images.pexels.com/photos/6777560/pexels-photo-6777560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     project_name: projects?.find((p) => p.project_id === _project_id)
       .project_name,
-    price: synergies?.find((s) => s.id === _synergy_id).price,
+    price: synergies?.find((s) => s.id === _synergy_id)?.price,
     partnerships,
     _synergy_id,
   });

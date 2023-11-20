@@ -15,7 +15,6 @@ export const UserContext = React.createContext();
 
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState();
-
   const [projects, setProjects] = useState([]);
   const [synergies, setSynergies] = useState();
   const [pendingSynergies, setPendingSynergies] = useState();
@@ -103,8 +102,7 @@ const UserContextProvider = ({ children }) => {
         ? "admin"
         : "user";
       setUser({
-        id: "970795810809868288",
-        // id: userTemp.provider_id,
+        duser_id: "970795810809868288",
         name: userTemp.name,
         picture: userTemp.picture,
         role: role,

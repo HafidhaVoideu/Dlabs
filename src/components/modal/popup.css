@@ -54,8 +54,19 @@
 }
 .popup__des-div {
   margin-top: 1rem;
+  text-align: center;
 }
 
 .popup__error {
   color: crimson;
+}
+
+.popup__des-rating > p {
+  color: var(--golden);
+}
+.popup__des-rating > select > option {
+  margin-bottom: 0.5rem;
+}
+.popup__des-rating {
+  margin-top: 1rem;
 }

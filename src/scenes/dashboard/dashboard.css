@@ -277,7 +277,8 @@
 }
 
 .form__input,
-.form__textarea {
+.form__textarea,
+.form__select {
   padding: 0.5rem;
   background-color: rgb(56, 55, 55);
   color: white;
@@ -314,6 +315,10 @@
 }
 
 .form__select {
+  padding: 0.5rem;
+  /* color: rgb(30, 29, 29); */
+}
+.form__select > select > option {
   padding: 0.5rem;
   /* color: rgb(30, 29, 29); */
 }

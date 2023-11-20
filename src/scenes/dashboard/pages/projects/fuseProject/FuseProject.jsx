@@ -6,7 +6,7 @@ import "./fuseProject.css";
 
 const FuseProject = ({ closeModal }) => {
   const [page, setPage] = useState(0);
-  const [select, setSelect] = useState();
+  const [select, setSelect] = useState("");
   const [multipleSelect, setMultipleSelect] = useState([]);
   const { projects, setAlert, setProjects } = useGlobalContextUser();
 
@@ -37,7 +37,6 @@ const FuseProject = ({ closeModal }) => {
       (p) => !multipleSelect.map((sp) => sp.value).includes(p.project_id)
     );
 
-    console.log("temp:", temp);
     setProjects(temp);
 
     closeModal();

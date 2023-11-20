@@ -116,7 +116,9 @@ const Projects = () => {
       <section className="projects">
         {search &&
           projects
-            ?.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
+            ?.filter((p) =>
+              p.project_name.toLowerCase().includes(search.toLowerCase())
+            )
             .map((p, index) => (
               <Project
                 key={index}

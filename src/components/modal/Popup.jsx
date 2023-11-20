@@ -17,6 +17,7 @@ const Popup = ({ project, closeModal, icons = true }) => {
     description,
     twitter,
     roles,
+    rating,
     partnerships,
   } = project;
   const { user, setUser } = useGlobalContextUser();
@@ -156,6 +157,12 @@ const Popup = ({ project, closeModal, icons = true }) => {
             <div className="popup__des-div">
               <h1 className="popup__des-label">Description</h1>
               <p className="popup__des">{description}</p>
+            </div>
+
+            <div className="popup__des-rating">
+              <p>
+                Rating: <span>{rating}</span>
+              </p>
             </div>
           </div>
 

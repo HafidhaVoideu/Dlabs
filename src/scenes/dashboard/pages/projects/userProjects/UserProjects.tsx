@@ -46,7 +46,7 @@ const UserProjects = () => {
       </section>
       <Pagination
         currentPage={currentPage}
-        totalCount={search && tab === "Projects" ? 0 : projects.length}
+        totalCount={search && tab === "Projects" ? 0 : projects?.length}
         pageSize={maxItems}
         onPageChange={(page) => setCurrentPage(page)}
       />

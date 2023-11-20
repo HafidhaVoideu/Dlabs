@@ -14,14 +14,6 @@ const AddSynergy = ({ setIsModal }) => {
     .map((p) => {
       return { value: p.project_id, label: p.project_name };
     });
-  // const isValidUrl = (url) => {
-  //   try {
-  //     new URL(url);
-  //   } catch (e) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   const [select, setSelect] = useState(mappedOptions[0]);
   const validateSchema = Yup.object({
