@@ -43,20 +43,20 @@ const Synergies = () => {
   useEffect(() => {
     if (search) {
       setSearchedProjects([]);
-      const projectNames = projects.map((p) => {
+      const projectNames = projects?.map((p) => {
         if (synergies?.map((s) => s._project_id).includes(p.project_id))
           return p.project_name;
       });
-      const searchProjectNames = projectNames.filter((name) =>
+      const searchProjectNames = projectNames?.filter((name) =>
         name?.toLowerCase().includes(search?.toLowerCase())
       );
-      const mappedProjects = projects.filter((p) =>
+      const mappedProjects = projects?.filter((p) =>
         searchProjectNames.includes(p.project_name)
       );
-      const mappedSynergies = synergies.filter((s) =>
+      const mappedSynergies = synergies?.filter((s) =>
         mappedProjects.map((p) => p.project_id).includes(s._project_id)
       );
-      if (mappedSynergies.length) setSearchedProjects(mappedSynergies);
+      if (mappedSynergies?.length) setSearchedProjects(mappedSynergies);
     }
   }, [search]);
 
@@ -77,7 +77,7 @@ const Synergies = () => {
           setMin={setMin}
           setMax={setMax}
         />
-        {user.role === "admin" && (
+        {user?.role === "admin" && (
           <div className="dashboard__btns">
             <button
               className="dashboard__add-btn"
@@ -109,7 +109,7 @@ const Synergies = () => {
       </div>
 
       {isModal && (
-        <div className="modal  ">
+        <div className="modal">
           <div className="modal-content dropshadow">
             <div className="modal__icons">
               <button
@@ -142,7 +142,7 @@ const Synergies = () => {
 
       <Pagination
         currentPage={currentPage}
-        totalCount={search && tab === "Projects" ? 0 : synergies?.length}
+        totalCount={search ? 0 : synergies?.length}
         pageSize={maxItems}
         onPageChange={(page) => setCurrentPage(page)}
       />

@@ -16,7 +16,7 @@ const FeaturedProj = () => {
     const firstPageIndex = (currentPage - 1) * maxItems;
     const lastPageIndex = firstPageIndex + maxItems;
     return featuredProjects?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, featuredProjects]);
 
   return (
     <>
@@ -30,7 +30,7 @@ const FeaturedProj = () => {
           {search &&
             featuredProjects
               .filter((p) =>
-                p.name.toLowerCase().includes(search.toLowerCase())
+                p.project_name.toLowerCase().includes(search.toLowerCase())
               )
               .map((project) => (
                 <Fproject key={project.project_id} project={project} />

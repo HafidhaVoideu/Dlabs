@@ -6,7 +6,7 @@ import { pendingSynergies as defaultPendingSynergies } from "../data/pendingSyne
 import axios from "../axios/axios";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
+export const supabase = createClient(
   "https://alkldwabyaufocdpdpns.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsa2xkd2FieWF1Zm9jZHBkcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkyNDIyMzAsImV4cCI6MjAxNDgxODIzMH0.HftPTZvFZi-nvwugLuQX7QLT1wbVRyIbTiwGC0ydwqI"
 );
@@ -25,11 +25,13 @@ const UserContextProvider = ({ children }) => {
   const [session, setSession] = useState();
   const [loading, setLoading] = useState(false);
 
+  const [userProjects, setUserProjects] = useState();
+
   const getFeaturedProjects = () => {
     axios
       .get("/api/featuredprojects/")
       .then((response) => {
-        // console.log(response.data.data);
+        console.log(" featured projects:", response.data.data);
         setFeaturedProjects(response.data.data);
       })
       .catch((error) => {
@@ -40,8 +42,8 @@ const UserContextProvider = ({ children }) => {
     axios
       .get("/api/projects/")
       .then((response) => {
-        // console.log(response.data.data);
-        setProjects(response.data.data);
+        console.log("projects:", response.data);
+        setProjects(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +54,6 @@ const UserContextProvider = ({ children }) => {
     axios
       .get("/api/synergies/")
       .then((response) => {
-        // console.log("Synergies", response.data.data);
         setSynergies(response.data.data);
       })
       .catch((error) => {
@@ -63,7 +64,6 @@ const UserContextProvider = ({ children }) => {
     axios
       .get("/api/synergyrequests/")
       .then((response) => {
-        console.log("PendingSynergies", response.data.data);
         setPendingSynergies(response.data.data);
       })
       .catch((error) => {
@@ -82,7 +82,7 @@ const UserContextProvider = ({ children }) => {
     });
 
     if (userTemp.provider_id) {
-      const [firstResponse, secondResponse] = await Promise.all([
+      const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
         // provider id here
 
         axios.get(`/api/users/970795810809868288`),
@@ -92,14 +92,10 @@ const UserContextProvider = ({ children }) => {
       const userInfo = firstResponse.data.data;
       const userRoles = secondResponse.data.roles;
 
-      console.log("userInfo:", userInfo[0].roles.replace(/['"]+/g, ""));
-      console.log("userInfo:", userInfo);
-      console.log("userRoles:", userRoles);
-
       const role = userRoles.includes("mod")
         ? "mod"
         : userRoles.includes("Profile Validated")
-        ? "admin"
+        ? "validated user"
         : "user";
       setUser({
         duser_id: "970795810809868288",
@@ -107,76 +103,6 @@ const UserContextProvider = ({ children }) => {
         picture: userTemp.picture,
         role: role,
 
-        projects: [
-          {
-            id: 1,
-            name: "mom's projects",
-            des: "The cat is a domesticated species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is commonly referred to as the domestic cat or house cat to distinguish it from the wild members of the family.",
-            img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            roles: [
-              { id: "role-1", label: "dev" },
-              { id: "role-22", label: "dentist" },
-              { id: "role-33", label: "president" },
-            ],
-            twitter: "www.projectTwitter.com",
-            discord: "www.DiscorVideu.com",
-            website: "www.projectWebsite.com ",
-
-            partnerships: [
-              { id: "partnership-0", label: "partnership 1" },
-              { id: "partnership-02", label: "partnership 2" },
-              { id: "partnership-03", label: "partnership 3" },
-            ],
-          },
-          {
-            id: 2,
-            name: "dad's project",
-            des: "The cat is a domesticated species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is commonly referred to as the domestic cat or house cat to distinguish it from the wild members of the family.",
-            img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-
-            roles: [{ id: "role-2", label: "collab" }],
-            twitter: "www.projectTwitter.com",
-            discord: "www.DiscorVideu.com",
-            website: "www.projectWebsite.com ",
-            partnerships: [
-              { id: "partnership-1", label: "partnership 1" },
-              { id: "partnership-12", label: "partnership 2" },
-              { id: "partnership-13", label: "partnership 3" },
-            ],
-          },
-          {
-            id: 3,
-            name: "Aunt's project",
-            des: "The cat is a domesticated species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is commonly referred to as the domestic cat or house cat to distinguish it from the wild members of the family.",
-            img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            roles: [{ id: "role-3", label: "team leader" }],
-
-            twitter: "www.projectTwitter.com",
-            discord: "www.DiscorVideu.com",
-            website: "www.projectWebsite.com ",
-            partnerships: [
-              { id: "partnership-1", label: "partnership 1" },
-              { id: "partnership-12", label: "partnership 2" },
-              { id: "partnership-13", label: "partnership 3" },
-            ],
-          },
-          {
-            id: 4,
-            name: " uncle's projects",
-            des: "The cat is a domesticated species of small carnivorous mammal. It is the only domesticated species in the family Felidae and is commonly referred to as the domestic cat or house cat to distinguish it from the wild members of the family.",
-            roles: [{ id: "role-4", label: "team leader" }],
-            img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            twitter: "www.projectTwitter.com",
-            discord: "www.DiscorVideu.com",
-            website: "www.projectWebsite.com ",
-            partnerships: [
-              { id: "partnership-1", label: "partnership 1" },
-              { id: "partnership-12", label: "partnership 2" },
-              { id: "partnership-13", label: "partnership 3" },
-            ],
-          },
-        ],
-        // projects: userInfo,
         drkn_wallet: userInfo[0].drkn_wallet,
         idrkn_wallet: userInfo[0].idrkn_wallet,
       });
@@ -185,17 +111,39 @@ const UserContextProvider = ({ children }) => {
     setLoading(false);
   }
 
+  const getUserProjects = async () => {
+    await axios
+      .get("/api/userprojects/970795810809868288")
+      .then((response) => {
+        console.log("userprojects", response.data.data);
+
+        setUserProjects(response.data.data);
+
+        //   // return { _project_id: 2 };
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getUserData();
     getFeaturedProjects();
     getProjects();
+
     getSynergies();
     getPendingSynergies();
+    getUserProjects();
   }, []);
 
   useEffect(() => {
     setSearch("");
   }, [tab]);
+
+  useEffect(() => {
+    const temp = projects.filter((p) => p.featured === 1);
+    setFeaturedProjects([...temp]);
+  }, [projects]);
 
   return (
     <UserContext.Provider
@@ -218,6 +166,8 @@ const UserContextProvider = ({ children }) => {
         setPendingSynergies,
         session,
         setSession,
+        userProjects,
+        setUserProjects,
       }}
     >
       {children}

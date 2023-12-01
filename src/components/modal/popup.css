@@ -1,5 +1,8 @@
 .popup {
   padding: 1.5rem 0rem;
+  height: 80vh;
+  overflow: auto;
+  /* background-color: aquamarine; */
 }
 
 .popup__delete-btn,
@@ -54,7 +57,10 @@
 }
 .popup__des-div {
   margin-top: 1rem;
+  padding: 0.5rem;
   text-align: center;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .popup__error {

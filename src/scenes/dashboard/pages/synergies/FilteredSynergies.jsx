@@ -15,16 +15,16 @@ const FilteredSynergies = ({
     if (searchedProjects?.length) synergiesTemp = searchedProjects;
     else synergiesTemp = synergies;
 
-    if (max) {
+    if (max && min) {
+      filteredSynergies = synergiesTemp.filter(
+        (s) => s.price >= min && s.price <= max
+      );
+      setFilteredSyn(filteredSynergies);
+    } else if (max) {
       filteredSynergies = synergiesTemp.filter((s) => s.price <= max);
       setFilteredSyn(filteredSynergies);
     } else if (min) {
       filteredSynergies = synergiesTemp.filter((s) => s.price >= min);
-      setFilteredSyn(filteredSynergies);
-    } else if (max && min) {
-      filteredSynergies = synergiesTemp.filter(
-        (s) => s.price >= min && s.price <= max
-      );
       setFilteredSyn(filteredSynergies);
     } else setFilteredSyn([]);
   }, [min, max]);

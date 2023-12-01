@@ -5,9 +5,16 @@ import { FaXTwitter } from "react-icons/fa6";
 import { BsGlobe, BsPerson } from "react-icons/bs";
 import { AiFillDelete, AiOutlineClose } from "react-icons/ai";
 import { useGlobalContextUser } from "../../context/context";
-import Select from "react-select";
 
-const Popup = ({ project, closeModal, icons = true }) => {
+import CreatableSelect from "react-select/creatable";
+
+const Popup = ({
+  project,
+  closeModal,
+  icons = true,
+  roles,
+  formattedPartnerships,
+}) => {
   const {
     project_id,
     project_name,
@@ -16,7 +23,6 @@ const Popup = ({ project, closeModal, icons = true }) => {
     website,
     description,
     twitter,
-    roles,
     rating,
     partnerships,
   } = project;
@@ -41,9 +47,22 @@ const Popup = ({ project, closeModal, icons = true }) => {
     { value: "role-16", label: "Community Member" },
     { value: "role-17", label: "Press/news" },
   ];
-  const [selectedRoles, setSelectedRoles] = useState(roles);
+
+  let formattedRoles;
+
+  if (roles)
+    formattedRoles = roles?.map((role) => {
+      return { label: role, value: role };
+    });
+
+  const [selectedRoles, setSelectedRoles] = useState(formattedRoles);
   const [error, setError] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  const handleCreate = (inputValue) => {
+    const formattedInputValue = { label: inputValue, value: inputValue };
+    setSelectedRoles((prev) => [...prev, formattedInputValue]);
+  };
 
   const deleteProject = () => {
     const projectToDelete = user.projects.filter(
@@ -107,22 +126,19 @@ const Popup = ({ project, closeModal, icons = true }) => {
               <>
                 {isEdit ? (
                   <>
-                    <Select
+                    <CreatableSelect
                       className="popup__select"
-                      value={selectedRoles?.map((role) => {
-                        return { label: role.label, value: role.id };
-                      })}
+                      value={selectedRoles}
                       options={options}
                       onChange={(roles) => {
-                        setSelectedRoles(
-                          roles.map((role) => {
-                            return { label: role.label, id: role.value };
-                          })
-                        );
+                        setSelectedRoles(roles);
                       }}
+                      onCreateOption={handleCreate}
                       isClearable={false}
                       isSearchable
+                      classNamePrefix="react-select"
                       isMulti
+                      styles={{ width: "100%" }}
                     />
 
                     {error && (
@@ -137,8 +153,8 @@ const Popup = ({ project, closeModal, icons = true }) => {
                     <li>
                       <BsPerson />
                     </li>
-                    {roles?.map((r) => (
-                      <li key={r.id}>{r.label}</li>
+                    {roles?.map((role, i) => (
+                      <li key={i}>{role}</li>
                     ))}
                   </ul>
                 )}
@@ -148,8 +164,9 @@ const Popup = ({ project, closeModal, icons = true }) => {
             {partnerships && (
               <ul className="profile__project__partnerships separator">
                 <li>Partnerships:</li>
-                {partnerships?.map((p) => (
-                  <li key={p.id}>{p.label}</li>
+
+                {formattedPartnerships?.map((p, i) => (
+                  <li key={i}> &#9679;{p} </li>
                 ))}
               </ul>
             )}
@@ -169,6 +186,7 @@ const Popup = ({ project, closeModal, icons = true }) => {
           {/* Links */}
           <div className="profile__project__links">
             {/* Discord */}
+
             <div className="profile__project__link">
               <button>
                 <BiLogoDiscord />

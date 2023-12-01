@@ -82,7 +82,8 @@
 .modal-content {
   margin: 1.2vh auto;
   padding: 0px 15px;
-  max-width: 400px;
+  max-width: 440px;
+  min-height: 350px;
   width: 90%;
   border-radius: 10px;
   overflow-y: auto;
@@ -117,6 +118,7 @@
 
 .dashboard__btns {
   order: -1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,8 +130,9 @@
 .profile__projects {
   display: grid;
   margin: 3rem auto;
-  grid-template-columns: repeat(auto-fit, minmax(min-content, 330px));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 330px));
   min-height: 70vh;
+
   align-items: center;
   gap: 2rem;
 }
@@ -173,6 +176,8 @@
 
 .profile__project__des {
   line-height: 1.4;
+
+  max-width: 300px;
 }
 
 .profile__project__info {
@@ -235,7 +240,14 @@
 }
 
 .profile__project__partnerships {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: "Didact Gothic", sans-serif;
+  margin-top: 1.5rem;
+}
+
+.profile__project__partnerships > li {
   margin-top: 1rem;
 }
 
@@ -292,6 +304,7 @@
   text-align: left;
   color: var(--crimson);
   font-weight: bold;
+
   font-size: 1.03rem;
   text-transform: capitalize;
 }
@@ -306,7 +319,7 @@
 .form__div {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .form__error {
@@ -325,7 +338,7 @@
 
 .btns {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 3rem;
   align-items: center;
   gap: 2rem;
   justify-content: center;
@@ -336,6 +349,10 @@
   padding: 0.5rem 1.8rem;
   color: var(--crimson);
   border-radius: 5px;
+  font-size: 1.08rem;
+  font-weight: 600;
+
+  max-width: 300px;
 }
 .btn:hover {
   background-color: var(--golden);
@@ -391,21 +408,25 @@
 
 .react-select-container--is-selected,
 .react-select__menu-list--is-selected {
-  /* background-color: pink; */
+  background-color: pink;
 }
 
-.react-select-container--is-focused {
+.react-select-container {
+  width: 100%;
+}
+
+/* .react-select-container--is-focused {
   background-color: green !important;
   border: none !important;
 }
 
 .react-select__value-container--is-focused {
   color: red;
-}
+} */
 
 .react-select__menu-list,
 .react-select__value-container {
-  background-color: rgb(223, 216, 216) !important;
+  background-color: rgb(56, 55, 55) !important;
   /* color: var(--crimson) !important; */
 }
 
@@ -420,11 +441,15 @@
 
 .react-select__option,
 .react-select__option--is-selected {
-  /* color: var(--crimson) !important; */
+  color: var(--crimson) !important;
+}
+
+.react-select__option:hover {
+  background-color: rgb(78, 78, 78);
 }
 .react-select__option:hover,
 .react-select__option:focus,
 .react-select__option--is-selected,
 .react-select__option--is-focused {
-  /* background-color: var(--golden) !important; */
+  background-color: var(--golden) !important;
 }

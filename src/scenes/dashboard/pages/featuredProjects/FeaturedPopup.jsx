@@ -5,8 +5,15 @@ import { BsGlobe } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
 const FeaturedPopup = ({ closeModal, fproject }) => {
-  const { project_name, description, image, twitter, discord_link, website } =
-    fproject;
+  const {
+    project_name,
+    description,
+    image,
+    twitter,
+    discord_link,
+    website,
+    rating,
+  } = fproject;
 
   return (
     <div id="myModal" className="modal  ">
@@ -32,6 +39,12 @@ const FeaturedPopup = ({ closeModal, fproject }) => {
             <div className="popup__des-div">
               <h1 className="popup__des-label">Description</h1>
               <p className="popup__des">{description}</p>
+            </div>
+
+            <div className="popup__des-rating">
+              <p>
+                Rating: <span>{rating}</span>
+              </p>
             </div>
           </div>
 

@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
-
 import "./projects.css";
 import { motion } from "framer-motion";
 import EditProject from "./editProject/EditProject";
+import axios from "axios";
+import { access_token } from "../../../../constants/accesToken";
 
 import {
   AiOutlineDelete,
@@ -11,11 +12,9 @@ import {
 } from "react-icons/ai";
 
 import { BiSelectMultiple } from "react-icons/bi";
-
 import Project from "./project/Project";
 import { useGlobalContextUser } from "../../../../context/context";
 import FuseProject from "./fuseProject/FuseProject";
-
 import { maxItems } from "../../../../constants/const";
 import Pagination from "../../../../components/pagination/Pagination";
 
@@ -27,7 +26,7 @@ const Projects = () => {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * maxItems;
     const lastPageIndex = firstPageIndex + maxItems;
-    return projects.slice(firstPageIndex, lastPageIndex);
+    return projects?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, projects]);
 
   const [isAddModal, setIsAddModal] = useState(false);
@@ -49,6 +48,16 @@ const Projects = () => {
       );
 
       setProjects([...temp]);
+      axios.all(
+        selectedProjects.map((p) =>
+          axios.delete(`http://68.183.108.138:3000/api/projects/`, {
+            headers: { Authorization: `Bearer ${access_token}` },
+            data: {
+              projectIds: p.project_id,
+            },
+          })
+        )
+      );
 
       if (selectedProjects.length > 1)
         setAlert({
@@ -130,7 +139,7 @@ const Projects = () => {
             ))}
 
         {!search &&
-          currentTableData.map((p, index) => (
+          currentTableData?.map((p, index) => (
             <Project
               key={index}
               project={p}
@@ -143,7 +152,7 @@ const Projects = () => {
 
       <Pagination
         currentPage={currentPage}
-        totalCount={search && tab === "Projects" ? 0 : projects.length}
+        totalCount={projects?.length}
         pageSize={maxItems}
         onPageChange={(page) => setCurrentPage(page)}
       />

@@ -23,8 +23,7 @@
 }
 .dashboard-aside__btn {
   color: var(--crimson);
-  font-size: 1rem;
-  padding: 1rem 0.3rem;
+  margin-top: 1rem;
 }
 
 .dashboard-aside__btn--close {

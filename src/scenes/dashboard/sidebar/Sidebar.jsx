@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
 // import profile from "../../../assets/profile.png";
 import { FaXTwitter } from "react-icons/fa6";
@@ -10,8 +10,19 @@ import { useGlobalContextUser } from "../../../context/context";
 import "./sidebar.css";
 
 import { links } from "../../../constants/const";
+import EditProfile from "./EditProfile";
 const Sidebar = () => {
   const [open, cycleOpen] = useCycle(false, true);
+  const [isModal, setIsModal] = useState(false);
+
+  const closeModal = () => {
+    setIsModal(false);
+  };
+
+  const openModal = () => {
+    setIsModal(true);
+  };
+
   const navigate = useNavigate();
   const { setTab, user, tab } = useGlobalContextUser();
 
@@ -37,6 +48,7 @@ const Sidebar = () => {
   };
   return (
     <main>
+      {isModal && <EditProfile closeModal={closeModal} />}
       <AnimatePresence>
         {open && (
           <motion.aside
@@ -54,7 +66,13 @@ const Sidebar = () => {
               className="avatar2   dashboard-aside__img glow-effect"
               data-glow-animation="grow"
             >
-              <img src={user?.picture} alt={user?.name} className="card__img" />
+              <img
+                src={user?.picture}
+                alt={user?.name}
+                style={{ cursor: "pointer" }}
+                className="card__img"
+                onClick={openModal}
+              />
               <svg className="glow-container">
                 <rect
                   pathLength="100"

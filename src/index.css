@@ -39,7 +39,7 @@ html {
   width: 9px;
 }
 ::-webkit-scrollbar-track {
-  background-color: #686666;
+  background-color: #666668;
   border-radius: 10px;
 }
 
@@ -179,7 +179,7 @@ p {
 .container {
   display: grid;
   place-items: center;
-  max-width: 1200px;
+  max-width: 1350px;
   min-height: 50vh;
   padding: 3rem 0.6rem;
 
@@ -240,7 +240,7 @@ p {
 
 @media screen and (min-width: 700px) {
   .container {
-    padding: 5rem 3rem;
+    padding: 5rem 2rem;
   }
   .section {
     padding: 5rem 0rem;
@@ -255,6 +255,12 @@ p {
 @media screen and (min-width: 1024px) {
   .typing-text {
     font-size: 1.55rem;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .section {
+    /* padding: 5rem 0rem; */
   }
 }
 

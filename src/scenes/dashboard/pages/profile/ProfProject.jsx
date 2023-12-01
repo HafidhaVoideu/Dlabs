@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BsPerson } from "react-icons/bs";
 import Popup from "../../../../components/modal/Popup";
+import { json } from "react-router";
 
 const ProfProject = ({ project, icons = true }) => {
   const [isModal, setIsModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const { project_name, image, job_desc, partnerships, description } = project;
 
-  const { project_name, image, roles, partnerships, description } = project;
+  console.log("job_des:", job_desc);
+  console.log("partnerships:", partnerships);
 
   const openModal = () => {
     setIsModal(true);
@@ -19,15 +22,36 @@ const ProfProject = ({ project, icons = true }) => {
     setModalContent(project);
   };
 
+  // Formatted Partnerships
+
+  var formattedPartnerships;
+
+  if (partnerships) {
+    formattedPartnerships = partnerships?.replace("|", "");
+    formattedPartnerships = JSON.parse(
+      formattedPartnerships?.replaceAll("'", '"').replaceAll(`'`, `"`)
+    );
+
+    var roles = JSON.parse(job_desc?.replaceAll("'", '"').replaceAll(`'`, `"`));
+  }
+
+  // formtted roles
+
   useEffect(() => {
     const body = document.querySelector("body");
-    body.style.overflow = isModal ? "hidden" : "auto";
+    body.style.overflow = isModal ? "hidden" : "trauto";
   }, [isModal]);
 
   return (
     <>
       {isModal && (
-        <Popup closeModal={closeModal} project={project} icons={icons} />
+        <Popup
+          closeModal={closeModal}
+          project={project}
+          icons={icons}
+          roles={roles}
+          formattedPartnerships={formattedPartnerships}
+        />
       )}
       <article className="profile__project " onClick={handleClick}>
         <img
@@ -45,8 +69,8 @@ const ProfProject = ({ project, icons = true }) => {
               <li>
                 <BsPerson />
               </li>
-              {roles?.map((r) => (
-                <li key={r.id}>{r.label}</li>
+              {roles?.map((role, i) => (
+                <li key={i}>{role}</li>
               ))}
             </ul>
           )}
@@ -55,15 +79,6 @@ const ProfProject = ({ project, icons = true }) => {
             {description?.substring(0, 90)}
             <span> ...Read More</span>
           </p>
-
-          {partnerships && (
-            <ul className="profile__project__partnerships separator">
-              <li>Partnerships:</li>
-              {partnerships.map((p) => (
-                <li key={p.id}>{p.label}</li>
-              ))}
-            </ul>
-          )}
         </div>
       </article>
     </>

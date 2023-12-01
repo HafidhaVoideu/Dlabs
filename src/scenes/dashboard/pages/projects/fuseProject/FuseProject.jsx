@@ -3,6 +3,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import Select from "react-select";
 import { useGlobalContextUser } from "../../../../../context/context";
 import "./fuseProject.css";
+import axios from "axios";
+import { access_token } from "../../../../../constants/accesToken";
 
 const FuseProject = ({ closeModal }) => {
   const [page, setPage] = useState(0);
@@ -39,6 +41,17 @@ const FuseProject = ({ closeModal }) => {
 
     setProjects(temp);
 
+    axios.all(
+      multipleSelect.map((p) =>
+        axios.delete(`http://68.183.108.138:3000/api/projects/`, {
+          headers: { Authorization: `Bearer ${access_token}` },
+          data: {
+            projectIds: p.value,
+          },
+        })
+      )
+    );
+
     closeModal();
     setAlert({
       isAlert: true,
@@ -54,7 +67,7 @@ const FuseProject = ({ closeModal }) => {
         className="fuse-panel__select"
         value={multipleSelect}
         onChange={(multipleSelect) => setMultipleSelect(multipleSelect)}
-        isClearable={true}
+        isClearable={false}
         isSearchable={true}
         options={options}
         isMulti

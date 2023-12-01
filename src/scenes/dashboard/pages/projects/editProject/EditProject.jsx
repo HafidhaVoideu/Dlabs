@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./edit.css";
 import { AiOutlineClose, AiOutlineFileAdd } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
@@ -75,11 +75,11 @@ const EditProject = ({ project, closeModal }) => {
   const validateSchema = Yup.object({
     project_name: Yup.string().required("required"),
     description: Yup.string().required("required"),
-    image: Yup.string()
-      .test("is-url-valid", "Image URL is not valid", (value) =>
-        isValidUrl(value)
-      )
-      .required("required"),
+    image: Yup.string().test(
+      "is-url-valid",
+      "Image URL is not valid",
+      (value) => isValidUrl(value)
+    ),
     discord_link: Yup.string().required("Please enter your discord"),
     rating: Yup.number().required("Please enter a valid rating"),
     twitter: Yup.string().required("Please enter your twitter"),
@@ -89,11 +89,9 @@ const EditProject = ({ project, closeModal }) => {
   const initialValues = {
     project_name: project?.project_name || "",
     description: project?.description || "",
-
     rating: project?.rating || 0,
-
     image:
-      project?.img ||
+      project?.image ||
       "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     discord_link: project?.discord_link || "",
     website: project?.website || "",
@@ -113,26 +111,45 @@ const EditProject = ({ project, closeModal }) => {
       rating,
     } = values;
 
-    console.log("modified rating:", rating);
+    let projectToEdit;
 
     const proj = projects.map((p) => {
-      if (p.project_id === project.project_id)
+      if (p.project_id === project.project_id) {
+        projectToEdit = p;
         return {
+          featured: p.featured,
           project_id: project.project_id,
           project_name,
           rating: Number(rating),
-          description,
+          description: String(description),
           discord_link,
-          image,
+          image:
+            image ||
+            "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           website,
           twitter,
         };
-      else return p;
+      } else return p;
     });
 
     setProjects([...proj]);
-
     setAlert({ isAlert: true, alertMessage: "Project has been edited" });
+
+    axios
+      .patch(`/api/projects/`, {
+        projectId: projectToEdit.project_id,
+        projectData: {
+          project_name,
+          description: String(description),
+          discord_link,
+          image,
+          rating: Number(rating),
+          website,
+          twitter,
+          featured: projectToEdit.featured,
+        },
+      })
+      .then((response) => console.log(response));
 
     closeModal();
   };
@@ -140,8 +157,6 @@ const EditProject = ({ project, closeModal }) => {
   // ****************** Add *****************************
 
   const handleAdd = (values) => {
-    //send axios to database
-
     const {
       project_name,
       description,
@@ -156,12 +171,15 @@ const EditProject = ({ project, closeModal }) => {
       {
         project_id: uuidV4(),
         project_name,
-        description,
+        description: String(description),
         discord_link,
-        image,
+        image:
+          image ||
+          "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         rating: Number(rating),
         website,
         twitter,
+        featured: 0,
       },
       ...projects,
     ]);
@@ -172,21 +190,34 @@ const EditProject = ({ project, closeModal }) => {
       .post(`/api/projects/`, {
         project_name: project_name,
         website: website,
-        description: description,
+        description: String(description),
         twitter: twitter,
         discord_link: discord_link,
         rating: rating,
-        image: image,
+        image:
+          image ||
+          "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+
+        featured: 0,
       })
-      .then((response) => console.log(response))
+      .then((response) => console.log(" add project response:", response))
       .catch((error) => console.log("error:", error.message));
+
+    axios
+      .get("/api/projects/")
+      .then((response) => {
+        setProjects(response.data.reverse());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     closeModal();
   };
 
   // ****************** Submit *****************************
 
   const onSubmit = (values, onSubmit) => {
-    console.log("submitted values", values);
     if (project) handleEdit(values);
     else handleAdd(values);
     onSubmit.setSubmitting(false);
@@ -227,7 +258,7 @@ const EditProject = ({ project, closeModal }) => {
 
                 <div className="form__div">
                   <label htmlFor="name" className="form__label">
-                    name
+                    project name
                   </label>
                   <Field
                     type="text"

@@ -6,8 +6,8 @@ import Select from "react-select";
 
 import { useGlobalContextUser } from "../../../../../../context/context";
 
-const ValidatedSynPopup = ({ validatedSyn, closeModal }) => {
-  const { projects, user } = useGlobalContextUser();
+const ValidatedSynPopup = ({ project_name, price, image, closeModal }) => {
+  const { userProjects, user } = useGlobalContextUser();
 
   const [page, setPage] = useState(0);
 
@@ -58,7 +58,7 @@ const ValidatedSynPopup = ({ validatedSyn, closeModal }) => {
       label: " Sharing early alpha and getting some eyeballs on it",
     },
   ];
-  const myprojects = user.projects.map((p) => {
+  const myprojects = userProjects.map((p) => {
     return { value: p.id, label: p.name };
   });
 
@@ -78,19 +78,19 @@ const ValidatedSynPopup = ({ validatedSyn, closeModal }) => {
         {page === 0 && (
           <article className="vsyn__popup ">
             <div className="vsyn__popup__info">
-              <h1 className="vsyn__popup__name"> {validatedSyn.name} </h1>
-              <img className="vsyn__popup__img" src={validatedSyn.img} />
-              <h1 className="vsyn__popup__price"> {validatedSyn.price} </h1>
+              <h1 className="vsyn__popup__name"> {project_name} </h1>
+              <img className="vsyn__popup__img" src={image} />
+              <h1 className="vsyn__popup__price"> {price} Idkn </h1>
             </div>
-            <button className="vsyn__popup__btn" onClick={handleBtn}>
-              Synergize with {validatedSyn.name}
+            <button className="btn" onClick={handleBtn}>
+              Synergize with {project_name}
             </button>
           </article>
         )}
 
         {page === 1 && (
           <article className="vsyn__page ">
-            <img className="vsyn__page__img" src={validatedSyn.img} />
+            <img className="vsyn__page__img" src={image} />
 
             <form onSubmit={handleSubmit} className="vsyn__page__form">
               <label htmlFor="vsyn-cselect">Partnerships</label>
@@ -120,7 +120,7 @@ const ValidatedSynPopup = ({ validatedSyn, closeModal }) => {
                 isSearchable
                 options={myprojects}
               />
-              <button type="submit" className="vsyn__page__btn">
+              <button type="submit" className="btn vsyn__page__btn ">
                 Validate{" "}
               </button>
             </form>

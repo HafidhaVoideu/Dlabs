@@ -18,6 +18,8 @@ const Pagination = ({
     currentPage,
   });
 
+  if (!paginationRange) return null;
+
   if (currentPage === 0 || paginationRange?.length < 2) {
     return null;
   }

@@ -5,7 +5,9 @@ import UserProjects from "../userProjects/UserProjects";
 
 const ProjectToRender = () => {
   const { user } = useGlobalContextUser();
-  return <>{user.role === "admin" ? <Projects /> : <UserProjects />}</>;
+
+  console.log("role:", user?.role);
+  return <>{user?.role === "admin" ? <Projects /> : <UserProjects />}</>;
 };
 
 export default ProjectToRender;

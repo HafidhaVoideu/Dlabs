@@ -11,10 +11,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { createClient } from "@supabase/supabase-js";
 import { useGlobalContextUser } from "../../../context/context";
 
-const supabase = createClient(
-  "https://alkldwabyaufocdpdpns.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsa2xkd2FieWF1Zm9jZHBkcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkyNDIyMzAsImV4cCI6MjAxNDgxODIzMH0.HftPTZvFZi-nvwugLuQX7QLT1wbVRyIbTiwGC0ydwqI"
-);
+import { supabase } from "../../../context/context";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,7 +31,6 @@ const Home = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("home sessions data:", session);
       setSession(session);
     });
 

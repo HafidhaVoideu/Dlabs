@@ -4,7 +4,7 @@
   align-items: center;
   padding: 1.6rem;
   gap: 1rem;
-  max-width: 470px;
+  max-width: 520px;
   min-height: 300px;
 
   background-color: #171717;
@@ -59,12 +59,12 @@
   }
 
   .service__title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.7;
   }
 
   .service__icon {
-    font-size: 3.5rem;
+    font-size: 3.7rem;
     color: var(--crimson);
   }
   .service__icon img {
@@ -80,6 +80,6 @@
   }
 
   .service__des {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 }

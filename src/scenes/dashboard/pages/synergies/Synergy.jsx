@@ -31,7 +31,6 @@ const Synergy = ({ syn }) => {
       />
       <div className="synergy__info">
         <h1 className="synergy__name">
-          {" "}
           Synergize with {synProject.project_name}
         </h1>
         <p className="synergy__price">{price} Idrkn </p>

@@ -4,28 +4,18 @@ import axios from "../../../../axios/axios";
 import "./pendingSynergies.css";
 
 const PopupPendingSynergy = ({ pendingSyn, closeModal }) => {
-  // useEffect(() => {
-  //   console.log("hello guys:", pendingSyn);
-  //   axios
-  //     .post(`/api/synergyrequests/`, {
-  //       synergy_id: 2,
-  //       userId: "3232323232",
-  //       projectId: 3,
-  //       partnerships: "minkna",
-  //     })
-  //     .then((response) => console.log(response))
-  //     .catch((error) => console.log(error.message));
-  // }, []);
+  console.log("pending Synergy", pendingSyn);
   const handleConfirm = () => {
     // open link
 
-    console.log("hello guys:", pendingSyn);
     axios
       .delete(`/api/synergyrequests/`, {
         synergy_id: pendingSyn._synergy_id,
       })
       .then((response) => console.log(response))
-      .catch((error) => console.log(error.message));
+      .catch((error) => console.log(error));
+
+    closeModal();
   };
 
   const handleRefuse = () => {
@@ -34,6 +24,8 @@ const PopupPendingSynergy = ({ pendingSyn, closeModal }) => {
         synergy_id: pendingSyn._synergy_id,
       })
       .then((response) => console.log(response));
+
+    closeModal();
   };
 
   return (
@@ -52,7 +44,6 @@ const PopupPendingSynergy = ({ pendingSyn, closeModal }) => {
             <p className="pyn__popup__partnerships">
               Partnerships: {pendingSyn.partnerships}
             </p>
-            <h1 className="pyn__popup__price"> {pendingSyn.price} Idkn</h1>
           </div>
 
           <div className="btns">

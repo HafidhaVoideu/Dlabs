@@ -35,7 +35,6 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Homepage />} />
-
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<FeaturedProj />} />
           <Route path="featuredprojects" element={<FeaturedProj />} />

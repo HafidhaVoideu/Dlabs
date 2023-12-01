@@ -1,10 +1,22 @@
 /* **************************** Validated Synergy ******************* */
 /* ******************************************************************* */
 
-.vsyn__popup {
+.vsyn__popup,
+.vsyn__page {
   text-align: center;
 
+  gap: 3rem;
+  min-height: 450px;
+
   padding-bottom: 2rem;
+}
+
+.vsyn__page,
+.vsyn__popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .vsyn {
@@ -30,6 +42,7 @@
 }
 .vsyn__popup__img {
   width: 220px;
+  height: auto;
 }
 
 .vsyn__popup__btn {
@@ -69,6 +82,7 @@
 .vsyn__page__form {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -77,14 +91,11 @@
   color: var(--crimson);
 }
 .vsyn__page__btn {
-  display: block;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-color: var(--golden);
-  padding: 0.5rem 1rem;
-  color: rgb(58, 57, 57);
-  margin: 0 auto;
+  align-self: center;
   margin-top: 2rem;
-  color: var(--crimson);
-  margin-bottom: 1rem;
+}
+
+.vsyn__page__img {
+  width: 220px;
+  height: 220px;
 }

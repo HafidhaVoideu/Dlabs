@@ -7,6 +7,8 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
+import axios from "../../../../../axios/axios";
+import { access_token } from "../../../../../constants/accesToken";
 // todo ****************************************************************
 
 const Project = ({
@@ -26,7 +28,7 @@ const Project = ({
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow =
-      isMoreModal || isEditModal ? "hproject_idden" : "auto";
+      isMoreModal || isEditModal ? "project_hidden" : "auto";
   }, [isEditModal, isMoreModal]);
 
   const closeEditModal = () => {
@@ -48,23 +50,42 @@ const Project = ({
 
   const addToFeatures = () => {
     const temp = projects.map((project) => {
-      if (project_id === project.project_id) return { ...project, featured: 1 };
-      else return project;
+      if (project_id === project.project_id) {
+        return { ...project, featured: 1 };
+      } else return project;
     });
 
     setProjects([...temp]);
+    setFeaturedProjects([...temp.filter((p) => p.featured === 1)]);
 
-    setFeaturedProjects(temp.filter((p) => p.featured === 1));
+    axios
+      .patch(`/api/projects/`, {
+        projectId: project_id,
+        projectData: {
+          featured: 1,
+        },
+      })
+      .then((response) => console.log(response));
   };
 
   const removeFromFeatures = () => {
     const temp = projects.map((project) => {
-      if (project_id === project.project_id)
-        return { ...project, featured: false };
-      else return project;
+      if (project_id === project.project_id) {
+        return { ...project, featured: 0 };
+      } else return project;
     });
 
     setProjects([...temp]);
+    setFeaturedProjects([...temp.filter((p) => p.featured === 1)]);
+
+    axios
+      .patch(`/api/projects/`, {
+        projectId: project_id,
+        projectData: {
+          featured: 0,
+        },
+      })
+      .then((response) => console.log(response));
   };
 
   useEffect(() => {
@@ -91,6 +112,7 @@ const Project = ({
       setSelectedProjects([]);
     }
   }, [isSelectAll]);
+
   return (
     <article className="project">
       <div className="project__select">

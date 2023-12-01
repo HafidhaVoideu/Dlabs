@@ -9,7 +9,9 @@ import ValidatedSynergies from "../synergies/validatedUserSyn/validatedSynergies
 const SynergyToRender = () => {
   const { user } = useGlobalContextUser();
   return (
-    <>{user.role === "validUser" ? <ValidatedSynergies /> : <Synergies />}</>
+    <>
+      {user?.role === "validated user" ? <ValidatedSynergies /> : <Synergies />}
+    </>
   );
 };
 
