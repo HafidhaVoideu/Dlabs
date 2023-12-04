@@ -89,6 +89,9 @@ const UserContextProvider = ({ children }) => {
       const userInfo = firstResponse.data.data;
       const userRoles = secondResponse.data.roles;
 
+      console.log("userInfo:", userInfo);
+      console.log("userRoles:", userRoles);
+
       const role = userRoles.includes("mod")
         ? "mod"
         : userRoles.includes("Profile Validated")
