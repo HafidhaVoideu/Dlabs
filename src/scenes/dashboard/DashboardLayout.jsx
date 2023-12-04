@@ -26,6 +26,7 @@ const DashboardLayout = () => {
     }
   }
 
+  console.log("user:", user);
   return (
     <>
       {user && (

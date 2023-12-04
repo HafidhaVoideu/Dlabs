@@ -24,7 +24,6 @@ const UserContextProvider = ({ children }) => {
   const [tab, setTab] = useState("Featured Projects");
   const [session, setSession] = useState();
   const [loading, setLoading] = useState(false);
-
   const [userProjects, setUserProjects] = useState();
 
   const getFeaturedProjects = () => {
@@ -83,8 +82,6 @@ const UserContextProvider = ({ children }) => {
 
     if (userTemp.provider_id) {
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-        // provider id here
-
         axios.get(`/api/users/970795810809868288`),
         axios.get(`/getRoles/970795810809868288`),
       ]);
@@ -102,7 +99,6 @@ const UserContextProvider = ({ children }) => {
         name: userTemp.name,
         picture: userTemp.picture,
         role: role,
-
         drkn_wallet: userInfo[0].drkn_wallet,
         idrkn_wallet: userInfo[0].idrkn_wallet,
       });
@@ -116,10 +112,7 @@ const UserContextProvider = ({ children }) => {
       .get("/api/userprojects/970795810809868288")
       .then((response) => {
         console.log("userprojects", response.data.data);
-
         setUserProjects(response.data.data);
-
-        //   // return { _project_id: 2 };
       })
       .catch((error) => {
         console.log(error);

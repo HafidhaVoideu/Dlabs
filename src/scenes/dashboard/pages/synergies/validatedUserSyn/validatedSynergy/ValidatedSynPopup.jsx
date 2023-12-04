@@ -7,10 +7,8 @@ import Select from "react-select";
 import { useGlobalContextUser } from "../../../../../../context/context";
 
 const ValidatedSynPopup = ({ project_name, price, image, closeModal }) => {
-  const { userProjects, user } = useGlobalContextUser();
-
+  const { userProjects } = useGlobalContextUser();
   const [page, setPage] = useState(0);
-
   const [select, setSelect] = useState();
   const [multipleSelect, setMultipleSelect] = useState([]);
 

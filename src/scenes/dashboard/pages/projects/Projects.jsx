@@ -31,7 +31,6 @@ const Projects = () => {
 
   const [isAddModal, setIsAddModal] = useState(false);
   const [isFuseModal, setIsFuseModal] = useState(false);
-
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [isSelectAll, setIsSelectAll] = useState(false);
 
