@@ -84,7 +84,13 @@ const UserContextProvider = ({ children }) => {
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
         axios.get(`/api/users/970795810809868288`),
         axios.get(`/getRoles/970795810809868288`),
-      ]);
+      ])
+        .then((response) => {
+          console.log("response:", response.data);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
 
       const userInfo = firstResponse.data.data;
       const userRoles = secondResponse.data.roles;
