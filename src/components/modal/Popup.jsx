@@ -26,7 +26,7 @@ const Popup = ({
     rating,
     partnerships,
   } = project;
-  const { user, setUser } = useGlobalContextUser();
+  const { user, setUser, userProjects } = useGlobalContextUser();
 
   const options = [
     { value: "role-1", label: "Founder" },
@@ -65,7 +65,7 @@ const Popup = ({
   };
 
   const deleteProject = () => {
-    const projectToDelete = user.projects.filter(
+    const projectToDelete = userProjects.filter(
       (project) => project.project_id !== project_id
     );
     setUser({ ...user, projects: projectToDelete });
@@ -80,7 +80,7 @@ const Popup = ({
       setError(false);
       if (!selectedRoles.length) setError(true);
       else {
-        const changedRoles = user.projects.map((project) => {
+        const changedRoles = userProjects.map((project) => {
           if (project.project_id === project_id)
             return { ...project, roles: selectedRoles };
           else return project;
