@@ -44,12 +44,12 @@ export const members = [
     job: "Head of Growth Morningstar Ventures",
     img: img3,
   },
-  {
-    id: "meme-4",
-    name: "Alejandro Navia",
-    job: "FounderNFTnow",
-    img: img4,
-  },
+  // {
+  //   id: "meme-4",
+  //   name: "Alejandro Navia",
+  //   job: "FounderNFTnow",
+  //   img: img4,
+  // },
 
   {
     id: "meme-5",
