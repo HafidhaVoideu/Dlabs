@@ -7,8 +7,8 @@ import axios from "../axios/axios";
 import { createClient } from "@supabase/supabase-js";
 
 export const supabase = createClient(
-  "https://alkldwabyaufocdpdpns.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsa2xkd2FieWF1Zm9jZHBkcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkyNDIyMzAsImV4cCI6MjAxNDgxODIzMH0.HftPTZvFZi-nvwugLuQX7QLT1wbVRyIbTiwGC0ydwqI"
+  "https://wzjeiqaguiuwllvemamo.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6amVpcWFndWl1d2xsdmVtYW1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE3ODg1ODAsImV4cCI6MjAxNzM2NDU4MH0.TPp-ns6Vwfc0mpv15K6HlaPuIbsYEkM2Xg4xmJUR8Dk"
 );
 
 export const UserContext = React.createContext();
