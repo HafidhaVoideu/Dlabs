@@ -26,20 +26,51 @@ const UserContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userProjects, setUserProjects] = useState();
 
+  let token = null;
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    // axios
+    //   .get("/api/users", {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     window.location.href = "/signin";
+    //     console.log(error);
+    //   });
+
+    token = storedToken;
+
+    // Fetch user data and set state here (using the token)
+  }, []);
+
   const getFeaturedProjects = () => {
     axios
-      .get("/api/featuredprojects/")
+      .get("/api/featuredprojects/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(" featured projects:", response.data.data);
         setFeaturedProjects(response.data.data);
       })
       .catch((error) => {
+        window.location.href = "/signin";
         console.log(error);
       });
   };
   const getProjects = () => {
     axios
-      .get("/api/projects/")
+      .get("/api/projects/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("projects:", response.data);
         setProjects(response.data.reverse());
@@ -51,7 +82,11 @@ const UserContextProvider = ({ children }) => {
 
   const getSynergies = () => {
     axios
-      .get("/api/synergies/")
+      .get("/api/synergies/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setSynergies(response.data.data);
       })
@@ -61,7 +96,11 @@ const UserContextProvider = ({ children }) => {
   };
   const getPendingSynergies = () => {
     axios
-      .get("/api/synergyrequests/")
+      .get("/api/synergyrequests/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setPendingSynergies(response.data.data);
       })
@@ -74,23 +113,34 @@ const UserContextProvider = ({ children }) => {
     setLoading(true);
     let userTemp = {};
 
+    let userTem = true;
+
     await supabase.auth.getUser().then((value) => {
       if (value.data?.user) {
         userTemp = value.data.user.user_metadata;
         console.log("supabase response", userTemp);
       }
     });
-    if (userTemp.provider_id) {
+    // if (userTemp.provider_id) {
+    if (userTem) {
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-        axios.get(`/api/users/970795810809868288`),
-        axios.get(`/getRoles/970795810809868288`),
+        axios.get(`/api/users/970795810809868288`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        axios.get(`/getRoles/970795810809868288`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
       ]);
 
       const userInfo = firstResponse.data.data;
       const userRoles = secondResponse.data.roles;
 
-      console.log("userInfo:", userInfo);
-      console.log("userRoles:", userRoles);
+      console.log("userInfo:", firstResponse);
+      console.log("userRoles:", secondResponse);
 
       const role = userRoles.includes("mod")
         ? "mod"
@@ -112,7 +162,11 @@ const UserContextProvider = ({ children }) => {
 
   const getUserProjects = async () => {
     await axios
-      .get("/api/userprojects/970795810809868288")
+      .get("/api/userprojects/970795810809868288", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("userprojects", response.data.data);
         setUserProjects(response.data.data);

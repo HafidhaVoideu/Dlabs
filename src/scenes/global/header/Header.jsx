@@ -9,6 +9,7 @@ import { TbArrowBigUpFilled } from "react-icons/tb";
 import arrow from "../../../assets/frames/arrow.png";
 
 import "./header.css";
+import { Link } from "react-router-dom";
 const Header = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
@@ -83,6 +84,12 @@ const Header = () => {
           </button>
           <ul className="header__menu__list ">
             <List isMenu={setIsMenu} />
+            <li>
+              <Link to="/signin">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Register</Link>
+            </li>
           </ul>
         </motion.nav>
       )}
@@ -102,6 +109,12 @@ const Header = () => {
         <nav>
           <ul>
             <List isMenu={setIsMenu} />
+            <li>
+              <Link to="/signin">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Register</Link>
+            </li>
           </ul>
         </nav>
 
