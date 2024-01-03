@@ -4,11 +4,14 @@ import MainFooter from "../global/footer/MainFooter";
 import "./Auth.css";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [birthday, setBirthday] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -16,7 +19,12 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      // Make a POST request to /api/signup/ to create a new user
+      // Check if the passwords match
+      if (password !== passwordConfirmation) {
+        setError("Passwords do not match.");
+        return;
+      }
+
       const response = await axios.post("/api/users", {
         email,
         password,
@@ -25,21 +33,10 @@ const SignUp = () => {
 
       console.log(response);
 
-      //   // Assuming the API returns a token, you can save it in local storage or state
-      //   const token = response.data.token;
-      //   // Save the token in local storage (you may want to use a more secure method)
-      //   localStorage.setItem("token", token);
-
-      //   // Now you can use the token in the headers for authenticated requests
-      //   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
       navigate("/signin");
-
-      // TODO: Redirect to the authenticated user's dashboard or perform other actions
     } catch (error) {
       console.error("Sign-up failed", error);
 
-      // Display error message
       setError("Error signing up. Please try again.");
     }
   };
@@ -59,13 +56,35 @@ const SignUp = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div>
+            <div className="passField">
               <label htmlFor="password">Password:</label>
+              <div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="passView"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <img src="/eye.png" />
+                  ) : (
+                    <img src="/hide.png" />
+                  )}
+                </button>
+              </div>
+            </div>
+            <div className="passField">
+              <label htmlFor="passwordConfirmation">Confirm Password:</label>
               <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type={showPassword ? "text" : "password"}
+                id="passwordConfirmation"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
               />
             </div>
             <div>
@@ -78,6 +97,9 @@ const SignUp = () => {
               />
             </div>
             {error && <p className="error-message">{error}</p>}
+            <p className="auth_note">
+              Already have an account? <Link to="/signin">SignIn</Link>
+            </p>
             <button type="submit">Sign Up</button>
           </form>
         </div>

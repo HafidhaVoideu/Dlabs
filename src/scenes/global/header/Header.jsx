@@ -15,6 +15,8 @@ const Header = () => {
   const [showTopButton, setShowTopButton] = useState(false);
   const [tab, setTab] = useState("");
 
+  const token = localStorage.getItem("token");
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -85,10 +87,11 @@ const Header = () => {
           <ul className="header__menu__list ">
             <List isMenu={setIsMenu} />
             <li>
-              <Link to="/signin">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Register</Link>
+              {token ? (
+                <Link href="/dashboard">Dashboard</Link>
+              ) : (
+                <Link to="/signin">Login</Link>
+              )}
             </li>
           </ul>
         </motion.nav>
@@ -110,11 +113,15 @@ const Header = () => {
           <ul>
             <List isMenu={setIsMenu} />
             <li>
-              <Link to="/signin">Login</Link>
+              {token ? (
+                <Link to="/dashboard">Dashboard</Link>
+              ) : (
+                <Link to="/signin">Login</Link>
+              )}
             </li>
-            <li>
+            {/* <li>
               <Link to="/signup">Register</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 

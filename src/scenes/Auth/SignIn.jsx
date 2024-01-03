@@ -4,6 +4,7 @@ import MainFooter from "../global/footer/MainFooter";
 import "./Auth.css";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Auth = () => {
   const [username, setUsername] = useState("");
@@ -31,7 +32,8 @@ const Auth = () => {
       const token = response.data.token;
       localStorage.setItem("token", token);
 
-      if (token) navigate("/");
+      if (token) window.location.href = "/dashboard";
+      // if (token) navigate("/dashboard");
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
@@ -72,8 +74,10 @@ const Auth = () => {
               />
             </div>
             {error && <p className="error-message">{error}</p>}
+            <p className="auth_note">
+              Don't have an account? <Link to="/signup">SignUp</Link>
+            </p>
             <button type="submit" disabled={loggingIn}>
-              {/* Display "Logging In..." when loggingIn is true, otherwise "Login" */}
               {loggingIn ? "Logging In..." : "Login"}
             </button>
           </form>

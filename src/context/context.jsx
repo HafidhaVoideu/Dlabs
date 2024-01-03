@@ -5,6 +5,8 @@ import { synergies as defaultSynergies } from "../data/synergies";
 import { pendingSynergies as defaultPendingSynergies } from "../data/pendingSynergies";
 import axios from "../axios/axios";
 import { createClient } from "@supabase/supabase-js";
+import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export const supabase = createClient(
   "https://wzjeiqaguiuwllvemamo.supabase.co",
@@ -26,22 +28,27 @@ const UserContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userProjects, setUserProjects] = useState();
 
-  let token = null;
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("Route changed:", location.pathname);
+    getUserData();
+    getFeaturedProjects();
+    getProjects();
+    getSynergies();
+    getPendingSynergies();
+    getUserProjects();
+  }, [location.pathname]);
+
+  const navigate = useNavigate();
+
+  let token = localStorage.getItem("token");
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    // axios
-    //   .get("/api/users", {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     window.location.href = "/signin";
-    //     console.log(error);
-    //   });
+
+    if (!storedToken) {
+      navigate("/signin");
+    }
 
     token = storedToken;
 
@@ -60,7 +67,7 @@ const UserContextProvider = ({ children }) => {
         setFeaturedProjects(response.data.data);
       })
       .catch((error) => {
-        window.location.href = "/signin";
+        navigate("/signin");
         console.log(error);
       });
   };
@@ -115,12 +122,12 @@ const UserContextProvider = ({ children }) => {
 
     let userTem = true;
 
-    await supabase.auth.getUser().then((value) => {
-      if (value.data?.user) {
-        userTemp = value.data.user.user_metadata;
-        console.log("supabase response", userTemp);
-      }
-    });
+    // await supabase.auth.getUser().then((value) => {
+    //   if (value.data?.user) {
+    //     userTemp = value.data.user.user_metadata;
+    //     console.log("supabase response", userTemp);
+    //   }
+    // });
     // if (userTemp.provider_id) {
     if (userTem) {
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
@@ -152,8 +159,8 @@ const UserContextProvider = ({ children }) => {
         name: userTemp.name,
         picture: userTemp.picture,
         role: role,
-        drkn_wallet: userInfo[0].drkn_wallet,
-        idrkn_wallet: userInfo[0].idrkn_wallet,
+        drkn_wallet: userInfo[0]?.drkn_wallet,
+        idrkn_wallet: userInfo[0]?.idrkn_wallet,
       });
     }
 

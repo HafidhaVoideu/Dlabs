@@ -9,6 +9,45 @@
   height: calc(100vh - 226px);
 }
 
+.passView {
+  margin: 0 !important;
+}
+
+/* .passField {
+  display: flex;
+  align-items: center;
+} */
+
+.auth-container form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.passField > div {
+  position: relative;
+}
+
+.passView {
+  border: none !important;
+  outline: none !important;
+  position: absolute;
+  width: 20px !important;
+  height: 20px;
+  padding: 0 !important;
+  top: 18%;
+  right: 10px;
+  /* transform: translateY(-50%); */
+}
+
+.auth_note a {
+  color: rgb(72, 72, 192) !important;
+  text-decoration: underline;
+}
+
+.passView {
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   .auth-body {
     height: calc(100vh - 211.5px);
@@ -43,7 +82,7 @@
   background: none;
   border-radius: 4px;
   font-size: 16px;
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .auth-container input:-webkit-autofill,
