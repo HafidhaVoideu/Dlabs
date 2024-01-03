@@ -14,6 +14,7 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [verificationModal, setVerificationModal] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -31,13 +32,38 @@ const SignUp = () => {
         birthday,
       });
 
-      console.log(response);
+      // Open the email verification modal
+      setVerificationModal(true);
 
-      navigate("/signin");
+      // console.log(response);
+
+      // navigate("/signin");
     } catch (error) {
       console.error("Sign-up failed", error);
 
       setError("Error signing up. Please try again.");
+    }
+  };
+
+  const handleVerifyEmail = async () => {
+    try {
+      const response = await axios.post("/api/auth/verifyEmail", {
+        userId: email, // Use the user's email as the userId for verification
+        name: email,
+      });
+
+      console.log(response);
+
+      // Display a message to the user that they need to check their email for verification
+      alert("Please check your email for verification");
+
+      // Optionally, you can automatically navigate to the sign-in page or handle it based on your application flow
+      navigate("/signin");
+    } catch (error) {
+      console.error("Email verification failed", error);
+
+      // Handle the error, for example, by displaying an error message to the user
+      alert("Email verification failed. Please try again.");
     }
   };
 
@@ -104,6 +130,18 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      {/* Email Verification Modal */}
+      {verificationModal && (
+        <div className="verification-modal">
+          <h2>Verify Email</h2>
+          <p>A verification link will be send on your email:</p>
+          <h3>{email}</h3>
+          {/* Add input fields and a button to submit verification code */}
+          {/* ... */}
+          <button onClick={handleVerifyEmail}>Verify</button>
+        </div>
+      )}
+
       <MainFooter />
     </div>
   );

@@ -1,21 +1,18 @@
-import React from "react";
-import logo from "../../../assets/logo.png";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HiMenu } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-import { TbArrowBigUpFilled } from "react-icons/tb";
-
-import arrow from "../../../assets/frames/arrow.png";
-
-import "./header.css";
 import { Link } from "react-router-dom";
+import arrow from "../../../assets/frames/arrow.png";
+import "./header.css";
+import { useNavigate } from "react-router";
+
 const Header = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
   const [tab, setTab] = useState("");
-
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -28,13 +25,22 @@ const Header = () => {
     else setShowTopButton(false);
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    // Remove token from local storage
+    localStorage.removeItem("token");
+    navigate("/");
+    // Update token state to trigger re-render
+    setToken(null);
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const List = ({ style, isMenu }) => {
+  const List = ({ isMenu }) => {
     const menu = [
       { tag: "Home", ref: "#home" },
       { tag: "Services", ref: "#services" },
@@ -42,6 +48,7 @@ const Header = () => {
       { tag: "Partners", ref: "#partners" },
       { tag: "About", ref: "#about" },
     ];
+
     return menu.map((item) => (
       <li key={item.tag} onClick={() => isMenu(false)} className={``}>
         <a
@@ -60,10 +67,8 @@ const Header = () => {
       <p className="header__logo-title">
         Darknight <span className="text-effect">Labs</span>
       </p>
-      {/* <img src={logo} alt="logo" className="header__img" /> */}
 
       {/* Mobile nav */}
-
       <button onClick={() => setIsMenu(true)} className="header__btn">
         <HiMenu />
       </button>
@@ -107,7 +112,6 @@ const Header = () => {
       )}
 
       {/* Desktop nav */}
-
       <div className="header__desktop-nav ">
         <nav>
           <ul>
@@ -119,15 +123,17 @@ const Header = () => {
                 <Link to="/signin">Login</Link>
               )}
             </li>
-            {/* <li>
-              <Link to="/signup">Register</Link>
-            </li> */}
           </ul>
         </nav>
-
-        <a href="#footer" className="header__desktop__btn">
-          Contact us
-        </a>
+        {token ? (
+          <a className="header__desktop__btn" onClick={handleLogout}>
+            Logout
+          </a>
+        ) : (
+          <a href="#footer" className="header__desktop__btn">
+            Contact us
+          </a>
+        )}
       </div>
     </header>
   );

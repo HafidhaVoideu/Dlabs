@@ -16,6 +16,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
 
   async function signOut() {
+    localStorage.removeItem("token");
     const { error } = await supabase.auth.signOut();
     if (!error) {
       console.log("logged out:", error);

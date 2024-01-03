@@ -48,6 +48,41 @@
   width: 100%;
 }
 
+/* Add these styles to your existing CSS file or create a new one */
+
+.verification-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.verification-modal h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.verification-modal p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.verification-modal button {
+  border: solid 1px #000;
+  color: #000;
+  padding: 10px 1em;
+  margin-top: 30px;
+}
+
+.verification-modal button:hover {
+  background-color: #f5efdb;
+}
+
 @media (max-width: 1024px) {
   .auth-body {
     height: calc(100vh - 211.5px);
