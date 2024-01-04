@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../global/header/Header";
 import MainFooter from "../global/footer/MainFooter";
 import "./Auth.css";
@@ -13,13 +13,30 @@ const Auth = () => {
   const [error, setError] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
 
+  useEffect(() => {
+    // Check if a token already exists in local storage
+    const storedToken = localStorage.getItem("token");
+    const currentRoute = window.location.pathname;
+
+    if (
+      storedToken &&
+      (currentRoute === "/signin" || currentRoute === "/signup")
+    ) {
+      // Optional: You can make a request to validate the token on the server if needed
+      axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+
+      // Navigate to the dashboard
+      history.push("/dashboard");
+    }
+  }, [history]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       setLoggingIn(true);
 
-      const response = await axios.post("/api/auth/", {
+      const response = await axios.post("/api/auth/login", {
         authMethod: "email/password",
         authData: {
           email: username,
@@ -37,7 +54,7 @@ const Auth = () => {
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      alert("Login Successfully!");
+      // alert("Login Successfully!");
 
       setLoggingIn(false);
     } catch (error) {

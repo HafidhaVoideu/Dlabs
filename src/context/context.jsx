@@ -45,8 +45,9 @@ const UserContextProvider = ({ children }) => {
   let token = localStorage.getItem("token");
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    const currentRoute = window.location.pathname;
 
-    if (!storedToken) {
+    if (!storedToken && currentRoute === "/dashboard") {
       navigate("/signin");
     }
 

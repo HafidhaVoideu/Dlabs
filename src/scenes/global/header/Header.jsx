@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HiMenu } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import arrow from "../../../assets/frames/arrow.png";
 import "./header.css";
 import { useNavigate } from "react-router";
@@ -42,11 +42,11 @@ const Header = () => {
 
   const List = ({ isMenu }) => {
     const menu = [
-      { tag: "Home", ref: "#home" },
-      { tag: "Services", ref: "#services" },
-      { tag: "Members", ref: "#members" },
-      { tag: "Partners", ref: "#partners" },
-      { tag: "About", ref: "#about" },
+      { tag: "Home", ref: "/#home" },
+      { tag: "Services", ref: "/#services" },
+      { tag: "Members", ref: "/#members" },
+      { tag: "Partners", ref: "/#partners" },
+      { tag: "About", ref: "/#about" },
     ];
 
     return menu.map((item) => (
@@ -118,9 +118,13 @@ const Header = () => {
             <List isMenu={setIsMenu} />
             <li>
               {token ? (
-                <Link to="/dashboard">Dashboard</Link>
+                <NavLink to="/dashboard" activeClassName="active-link">
+                  Dashboard
+                </NavLink>
               ) : (
-                <Link to="/signin">Login</Link>
+                <NavLink to="/signin" activeClassName="active-link">
+                  Login
+                </NavLink>
               )}
             </li>
           </ul>
