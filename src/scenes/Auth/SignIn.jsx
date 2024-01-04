@@ -26,7 +26,7 @@ const Auth = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
 
       // Navigate to the dashboard
-      history.push("/dashboard");
+      navigate("/dashboard");
     }
   }, [history]);
 

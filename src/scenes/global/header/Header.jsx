@@ -118,13 +118,9 @@ const Header = () => {
             <List isMenu={setIsMenu} />
             <li>
               {token ? (
-                <NavLink to="/dashboard" activeClassName="active-link">
-                  Dashboard
-                </NavLink>
+                <NavLink to="/dashboard">Dashboard</NavLink>
               ) : (
-                <NavLink to="/signin" activeClassName="active-link">
-                  Login
-                </NavLink>
+                <NavLink to="/signin">Login</NavLink>
               )}
             </li>
           </ul>
