@@ -81,7 +81,14 @@ const UserContextProvider = ({ children }) => {
       })
       .then((response) => {
         console.log("projects:", response.data);
-        setProjects(response.data.reverse());
+        if (response.data.success === 0) {
+          // Invalid token, navigate to "/signin"
+          localStorage.removeItem("token");
+          navigate("/signin");
+        } else {
+          // Valid response, update projects
+          setProjects(response.data.reverse());
+        }
       })
       .catch((error) => {
         console.log(error);

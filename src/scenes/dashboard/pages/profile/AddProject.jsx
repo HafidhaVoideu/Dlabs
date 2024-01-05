@@ -68,7 +68,8 @@ const AddProject = ({ closeModal }) => {
     console.log("multiple Selecet:", multipleSelect);
   }, [multipleSelect]);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
     axios
       .post("/api/userprojects/", {
         _duser_id: user.id,
@@ -97,7 +98,7 @@ const AddProject = ({ closeModal }) => {
           </button>
         </div>
 
-        <form className="form">
+        <form className="form" onSubmit={handleAdd}>
           {/* Select Projects */}
           <div className="form__div">
             <label className="form__label">select project </label>
