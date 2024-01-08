@@ -5,6 +5,8 @@ import { synergies as defaultSynergies } from "../data/synergies";
 import { pendingSynergies as defaultPendingSynergies } from "../data/pendingSynergies";
 import axios from "../axios/axios";
 import { createClient } from "@supabase/supabase-js";
+import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export const supabase = createClient(
   "https://wzjeiqaguiuwllvemamo.supabase.co",
@@ -26,23 +28,67 @@ const UserContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userProjects, setUserProjects] = useState();
 
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("Route changed:", location.pathname);
+    getUserData();
+    getFeaturedProjects();
+    getProjects();
+    getSynergies();
+    getPendingSynergies();
+    getUserProjects();
+  }, [location.pathname]);
+
+  const navigate = useNavigate();
+
+  let token = localStorage.getItem("token");
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const currentRoute = window.location.pathname;
+
+    if (!storedToken && currentRoute === "/dashboard") {
+      navigate("/signin");
+    }
+
+    token = storedToken;
+
+    // Fetch user data and set state here (using the token)
+  }, []);
+
   const getFeaturedProjects = () => {
     axios
-      .get("/api/featuredprojects/")
+      .get("/api/featuredprojects/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(" featured projects:", response.data.data);
         setFeaturedProjects(response.data.data);
       })
       .catch((error) => {
+        navigate("/signin");
         console.log(error);
       });
   };
   const getProjects = () => {
     axios
-      .get("/api/projects/")
+      .get("/api/projects/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("projects:", response.data);
-        setProjects(response.data.reverse());
+        if (response.data.success === 0) {
+          // Invalid token, navigate to "/signin"
+          localStorage.removeItem("token");
+          navigate("/signin");
+        } else {
+          // Valid response, update projects
+          setProjects(response.data.reverse());
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -51,7 +97,11 @@ const UserContextProvider = ({ children }) => {
 
   const getSynergies = () => {
     axios
-      .get("/api/synergies/")
+      .get("/api/synergies/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setSynergies(response.data.data);
       })
@@ -61,7 +111,11 @@ const UserContextProvider = ({ children }) => {
   };
   const getPendingSynergies = () => {
     axios
-      .get("/api/synergyrequests/")
+      .get("/api/synergyrequests/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setPendingSynergies(response.data.data);
       })
@@ -74,23 +128,34 @@ const UserContextProvider = ({ children }) => {
     setLoading(true);
     let userTemp = {};
 
-    await supabase.auth.getUser().then((value) => {
-      if (value.data?.user) {
-        userTemp = value.data.user.user_metadata;
-        console.log("supabase response", userTemp);
-      }
-    });
-    if (userTemp.provider_id) {
+    let userTem = true;
+
+    // await supabase.auth.getUser().then((value) => {
+    //   if (value.data?.user) {
+    //     userTemp = value.data.user.user_metadata;
+    //     console.log("supabase response", userTemp);
+    //   }
+    // });
+    // if (userTemp.provider_id) {
+    if (userTem) {
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-        axios.get(`/api/users/970795810809868288`),
-        axios.get(`/getRoles/970795810809868288`),
+        axios.get(`/api/users/970795810809868288`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        axios.get(`/getRoles/970795810809868288`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
       ]);
 
       const userInfo = firstResponse.data.data;
       const userRoles = secondResponse.data.roles;
 
-      console.log("userInfo:", userInfo);
-      console.log("userRoles:", userRoles);
+      console.log("userInfo:", firstResponse);
+      console.log("userRoles:", secondResponse);
 
       const role = userRoles.includes("mod")
         ? "mod"
@@ -102,8 +167,8 @@ const UserContextProvider = ({ children }) => {
         name: userTemp.name,
         picture: userTemp.picture,
         role: role,
-        drkn_wallet: userInfo[0].drkn_wallet,
-        idrkn_wallet: userInfo[0].idrkn_wallet,
+        drkn_wallet: userInfo[0]?.drkn_wallet,
+        idrkn_wallet: userInfo[0]?.idrkn_wallet,
       });
     }
 
@@ -112,7 +177,11 @@ const UserContextProvider = ({ children }) => {
 
   const getUserProjects = async () => {
     await axios
-      .get("/api/userprojects/970795810809868288")
+      .get("/api/userprojects/970795810809868288", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log("userprojects", response.data.data);
         setUserProjects(response.data.data);

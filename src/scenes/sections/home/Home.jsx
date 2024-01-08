@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import logo from "../../../assets/logo.png";
 import { TypingText } from "../../../components/CustomText";
 import { staggerContainer } from "../../../utils/motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import frame from "../../../assets/frames/btn.png";
 import "./home.css";
 import { Auth } from "@supabase/auth-ui-react";
@@ -67,6 +67,12 @@ const Home = () => {
             Connect To Discord
           </a>
         </div>
+
+        <div className="home__login-signup-btns">
+          <Link to="/signin">Sign-in</Link>
+          <Link to="/signup">Signup</Link>
+        </div>
+
         <motion.div
           variants={staggerContainer()}
           initial="hidden"

@@ -148,6 +148,21 @@ const Sidebar = () => {
                   </motion.a>
                 );
               })}
+              {user?.role === "moderator" ? (
+                <>
+                  <motion.a whileHover={{ scale: 1.1 }}>
+                    Synergy Requests
+                  </motion.a>
+                  <motion.a whileHover={{ scale: 1.1 }}>
+                    Project Management
+                  </motion.a>
+                  <motion.a whileHover={{ scale: 1.1 }}>
+                    Project Management
+                  </motion.a>
+                </>
+              ) : (
+                ""
+              )}
               <div className="dashboard-aside__socials">
                 <a href="#">
                   <FaXTwitter />

@@ -20,6 +20,11 @@
   font-size: 1.5rem;
 }
 
+a.active {
+  text-shadow: 0 0 10px #dcca87, 0 0 17px #dcca87, 0 0 10px #dcca87,
+    0 0 80px #dcca87, 0 0 90px #dcca87;
+}
+
 .header__desktop-nav {
   display: none;
 }
