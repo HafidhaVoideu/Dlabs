@@ -36,23 +36,29 @@ const Auth = () => {
     try {
       setLoggingIn(true);
 
-      const response = await axios.post("/api/auth/login", {
-        authMethod: "email/password",
-        authData: {
-          email: username,
-          password,
+      const response = await axios.post(
+        "/api/auth/login",
+        {
+          authMethod: "email/password",
+          authData: {
+            email: username,
+            password,
+          },
         },
-      });
+        {
+          withCredentials: true, // Set credentials option to 'include'
+        }
+      );
 
       console.log(response);
 
       const token = response.data.token;
-      localStorage.setItem("token", token);
+      // localStorage.setItem("token", token);
 
-      if (token) window.location.href = "/dashboard";
-      // if (token) navigate("/dashboard");
-
+      // if (response) window.location.href = "/dashboard";
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      if (token) navigate("/dashboard");
 
       // alert("Login Successfully!");
 

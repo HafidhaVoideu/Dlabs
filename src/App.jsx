@@ -15,9 +15,9 @@ import axios from "./axios/axios";
 import Auth from "./scenes/Auth/SignIn";
 import SignUp from "./scenes/Auth/SignUp";
 
-import { access_token } from "./constants/accesToken";
+// import { access_token } from "./constants/accesToken";
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+// axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
 function App() {
   const location = useLocation();

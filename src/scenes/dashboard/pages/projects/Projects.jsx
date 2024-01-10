@@ -49,12 +49,18 @@ const Projects = () => {
       setProjects([...temp]);
       axios.all(
         selectedProjects.map((p) =>
-          axios.delete(`http://68.183.108.138:3000/api/projects/`, {
-            headers: { Authorization: `Bearer ${access_token}` },
-            data: {
-              projectIds: p.project_id,
+          axios.delete(
+            `http://68.183.108.138:3000/api/projects/`,
+            {
+              // headers: { Authorization: `Bearer ${access_token}` },
+              data: {
+                projectIds: p.project_id,
+              },
             },
-          })
+            {
+              withCredentials: true,
+            }
+          )
         )
       );
 
