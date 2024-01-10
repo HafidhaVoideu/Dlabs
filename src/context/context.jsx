@@ -60,7 +60,7 @@ const UserContextProvider = ({ children }) => {
         // Set the new token in the component state
         setToken(newToken);
 
-        console.log("New refresh token", newToken);
+        console.log("refresh token");
 
         // Set the new token in the Axios default headers
         axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
@@ -129,7 +129,11 @@ const UserContextProvider = ({ children }) => {
         setFeaturedProjects(response.data.data);
       })
       .catch((error) => {
-        navigate("/signin");
+        const currentRoute = window.location.pathname;
+
+        if (currentRoute.includes("/dashboard")) {
+          navigate("/signin");
+        }
         console.log(error);
       });
   };

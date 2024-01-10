@@ -53,13 +53,12 @@ const Auth = () => {
       console.log(response);
 
       const token = response.data.token;
-      // localStorage.setItem("token", token);
+      localStorage.setItem("token", token);
 
       // if (response) window.location.href = "/dashboard";
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       if (token) navigate("/dashboard");
-
       // alert("Login Successfully!");
 
       setLoggingIn(false);
