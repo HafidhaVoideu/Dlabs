@@ -12,10 +12,12 @@ import PendingSynergies from "./scenes/dashboard/pages/pendingSynergies/PendingS
 import ProjectToRender from "./scenes/dashboard/pages/projects/project/ProjectToRender";
 import SynergyToRender from "./scenes/dashboard/pages/synergies/SynergyToRender";
 import axios from "./axios/axios";
+import Auth from "./scenes/Auth/SignIn";
+import SignUp from "./scenes/Auth/SignUp";
 
-import { access_token } from "./constants/accesToken";
+// import { access_token } from "./constants/accesToken";
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+// axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
 function App() {
   const location = useLocation();
@@ -35,6 +37,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/signin" element={<Auth />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<FeaturedProj />} />
           <Route path="featuredprojects" element={<FeaturedProj />} />

@@ -1,3 +1,4 @@
+// DashboardLayout.js
 import React from "react";
 import { Outlet } from "react-router";
 import DashHeader from "./dashHeader/DashHeader";
@@ -5,24 +6,23 @@ import TabTitle from "./title/TabTitle";
 import Sidebar from "./sidebar/Sidebar";
 import Alert from "../../components/alert/Alert";
 import { useNavigate } from "react-router-dom";
-import { createClient } from "@supabase/supabase-js";
-import "./dashboard.css";
 import { useGlobalContextUser } from "../../context/context";
-
-import { supabase } from "../../context/context";
+// import { logout } from "./path-to-auth/auth"; // Update the path accordingly
+import "./dashboard.css";
+import { logout } from "../Auth/SignOut";
 
 const DashboardLayout = () => {
   const { user } = useGlobalContextUser();
   const navigate = useNavigate();
 
   async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      console.log("logged out:", error);
+    const success = await logout();
 
+    if (success) {
+      localStorage.removeItem("token");
       navigate("/");
     } else {
-      console.log("error logging out:", error);
+      console.log("Logout failed");
     }
   }
 

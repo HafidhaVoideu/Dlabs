@@ -56,6 +56,21 @@
   width: 100%;
 }
 
+.home__login-signup-btns a {
+  font-size: 20px;
+  border: 1px solid #fff;
+  padding: 10px 20px;
+  border-radius: 10px 20px;
+  margin: 0 10px;
+}
+
+.home__login-signup-btns a:hover {
+  transform: scale(1.02);
+  transition: all 0.1s ease-in-out;
+  border-color: var(--golden);
+  color: var(--golden);
+}
+
 @media screen and (min-width: 375px) {
   .home {
     min-height: 90vh;

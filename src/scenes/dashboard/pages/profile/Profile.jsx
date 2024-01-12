@@ -19,7 +19,7 @@ const Profile = () => {
   console.log("projects:", projects);
 
   const [userProjectsAugmented, setUserProjectsAugmented] = useState(
-    userProjects.map((project) => {
+    userProjects?.map((project) => {
       const pro = projects.find((p) => p.project_id === project._project_id);
 
       return { ...project, ...pro };
@@ -69,7 +69,7 @@ const Profile = () => {
         {isAddModal && <AddProject closeModal={closeModal} />}
         {search &&
           userProjectsAugmented
-            .filter((p) =>
+            ?.filter((p) =>
               p.project_name.toLowerCase().includes(search.toLowerCase())
             )
             .map((project) => (

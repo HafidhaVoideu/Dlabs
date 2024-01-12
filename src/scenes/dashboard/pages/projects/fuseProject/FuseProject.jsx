@@ -43,12 +43,18 @@ const FuseProject = ({ closeModal }) => {
 
     axios.all(
       multipleSelect.map((p) =>
-        axios.delete(`http://68.183.108.138:3000/api/projects/`, {
-          headers: { Authorization: `Bearer ${access_token}` },
-          data: {
-            projectIds: p.value,
+        axios.delete(
+          `http://68.183.108.138:3000/api/projects/`,
+          {
+            // headers: { Authorization: `Bearer ${access_token}` },
+            data: {
+              projectIds: p.value,
+            },
           },
-        })
+          {
+            withCredentials: true,
+          }
+        )
       )
     );
 
